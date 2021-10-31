@@ -1,0 +1,25 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        google()
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    google()
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+}

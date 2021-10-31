@@ -1,0 +1,23 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenCentral()
+}
+
+dependencies {
+    api project(":ICore")
+    api project(":IRepo")
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+}
+
+test {
+    useJUnitPlatform()
+}
