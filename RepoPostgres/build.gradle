@@ -1,7 +1,25 @@
+buildscript {
+    ext {
+        flywayVersion = '8.0.2'
+        jooqVersion = '3.15.4'
+        jdbcVersion = '42.3.1'
+    }
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jooq:jooq-codegen:$jooqVersion"
+    }
+}
 plugins {
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1"
     id 'org.jetbrains.kotlin.jvm'
     id 'java'
-    id "org.flywaydb.flyway" version "8.0.2"
+    id "org.flywaydb.flyway" version "$flywayVersion"
+    id 'nu.studer.jooq' version '6.0.1'
 }
 
 group 'org.example'
@@ -16,8 +34,15 @@ repositories {
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
 
-    implementation "org.flywaydb:flyway-core:8.0.2"
-    implementation 'org.postgresql:postgresql:42.2.24.jre7'
+    implementation "org.flywaydb:flyway-core:$flywayVersion"
+    implementation "org.postgresql:postgresql:$jdbcVersion"
+
+    jooqGenerator "org.postgresql:postgresql:$jdbcVersion"
+    implementation "org.jooq:jooq:$jooqVersion"
+    implementation "org.jooq:jooq-meta:$jooqVersion"
+    implementation "org.jooq:jooq-codegen:$jooqVersion"
+
+    implementation 'org.apache.commons:commons-dbcp2:2.9.0'
 }
 
 test {
@@ -32,4 +57,60 @@ flyway {
     locations = ['classpath:db/migration']
 }
 
-flywayMigrate.dependsOn classes
+jooq {
+    configurations {
+        main {  // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation = true  // default (can be omitted)
+
+            generationTool {
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = "jdbc:postgresql://${System.getenv("fund_db_host")}:${System.getenv("fund_db_port")}/${System.getenv("fund_db_name")}"
+                    user = System.getenv("fund_db_superuser_name")
+                    password = System.getenv("fund_db_superuser_pass")
+                    properties {
+                        property {
+                            key = 'ssl'
+                            value = 'false'
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+                        forcedTypes {
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'JSONB?'
+                            }
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'INET'
+                            }
+                        }
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'com.repo'
+                        directory = 'build/generated/sources/jooq/main'  // default (can be omitted)
+                    }
+                    strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                }
+            }
+        }
+    }
+}
+
+build.dependsOn(generateJooq)
+generateJooq.dependsOn(flywayMigrate)
+
+
