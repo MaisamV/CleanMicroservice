@@ -22,6 +22,8 @@ plugins {
     id 'nu.studer.jooq' version '6.0.1'
 }
 
+apply from: 'flyway.gradle'
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -47,14 +49,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-flyway {
-    url = "jdbc:postgresql://${System.getenv("fund_db_host")}:${System.getenv("fund_db_port")}/${System.getenv("fund_db_name")}"
-    user = System.getenv("fund_db_superuser_name")
-    baselineOnMigrate = true
-    password = System.getenv("fund_db_superuser_pass")
-    locations = ['classpath:db/migration']
 }
 
 jooq {
@@ -111,6 +105,5 @@ jooq {
 }
 
 build.dependsOn(generateJooq)
-generateJooq.dependsOn(flywayMigrate)
 
 
