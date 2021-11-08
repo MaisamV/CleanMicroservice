@@ -11,4 +11,7 @@ create table if not exists t_test
     title bigint not null default 0
 );
 
+CREATE or replace FUNCTION check_function() RETURNS integer
+AS $body$ SELECT 1 $body$
+    LANGUAGE SQL;
 COMMIT;
