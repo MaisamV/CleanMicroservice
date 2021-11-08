@@ -105,6 +105,4 @@ jooq {
     }
 }
 
-build.dependsOn(generateJooq)
-
-
+flywayMigrate.dependsOn classes
