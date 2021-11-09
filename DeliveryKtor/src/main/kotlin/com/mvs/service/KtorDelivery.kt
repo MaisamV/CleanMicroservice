@@ -3,8 +3,11 @@ package com.mvs.service
 import com.mvs.delivery.IDelivery
 import com.mvs.health.IHealthCommand
 import com.mvs.health.IPingCommand
+import com.test.healthRoutes
+import com.test.pingRoute
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.cio.*
 
@@ -28,5 +31,8 @@ fun Application.addAllRoot() {
 }
 
 fun Application.registerRoutes() {
-
+    routing {
+        healthRoutes(healthCommand)
+        pingRoute(pingCommand)
+    }
 }
