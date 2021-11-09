@@ -3,5 +3,5 @@ flyway {
     user = System.getenv("fund_db_superuser_name")
     baselineOnMigrate = true
     password = System.getenv("fund_db_superuser_pass")
-    locations = ['classpath:db/migration']
+    locations = ['filesystem:./db/migration']
 }
