@@ -1,5 +1,5 @@
 rootProject.name = 'VirtualFund'
-include 'ConfigCli'
+include 'ConfigCore'
 
 include 'DeliveryKtor'
 include 'DeliveryCli'

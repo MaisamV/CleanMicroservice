@@ -1,22 +1,17 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'java'
+    id 'application'
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-    mavenCentral()
-}
-
 dependencies {
+    api project(":DeliveryKtor")
     api project(":Core")
     api project(":RepoPostgres")
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
 }
 
-test {
-    useJUnitPlatform()
-}
+mainClassName = "MainKt"
