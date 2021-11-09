@@ -1,4 +1,4 @@
-rootProject.name = 'VirtualFund'
+rootProject.name = 'CleanMicroservice'
 include 'ConfigCore'
 
 include 'DeliveryKtor'
