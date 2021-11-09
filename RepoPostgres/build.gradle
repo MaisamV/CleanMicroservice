@@ -60,7 +60,7 @@ jooq {
             generationTool {
                 jdbc {
                     driver = 'org.postgresql.Driver'
-                    url = "jdbc:postgresql://${System.getenv("fund_db_host")}:${System.getenv("fund_db_port")}/${System.getenv("fund_db_name")}"
+                    url = System.getenv("fund_db_url")
                     user = System.getenv("fund_db_superuser_name")
                     password = System.getenv("fund_db_superuser_pass")
                     properties {
