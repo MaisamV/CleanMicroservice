@@ -12,6 +12,17 @@ allprojects {
         mavenLocal()
         google()
     }
+
+    tasks.withType(JavaCompile).all {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
 }
 
 repositories {
