@@ -1,0 +1,12 @@
+# Clean Microservice
+This project is a modular microservice template using Kotlin, Postgres, Flyway, Jooq and Ktor technologies working together considering clean Architecture rules.
+
+you can easily change any module of data related to data, logic, delivery just with implementing related interfaces using another technology.
+In order to use another database just replace jdbc and data sources defined in build.gradle and ConnectionManager.kt 
+# Deploy
+In order to run this project follow bellow instructions:
+1. Define these environmental variables ```fund_db_url```, ```fund_db_superuser_name```, ```fund_db_superuser_pass```, ```fund_db_user_name```, ```fund_db_user_pass```
+2. ```git clone https://github.com/MaisamV/CleanMicroservice.git```
+3. ```cd ./CleanMicroservice```
+4. (If you didn't run flyway scripts already)```./gradlew flywayMigrate```
+5. ```./gradlew build ConfigCore:run```
