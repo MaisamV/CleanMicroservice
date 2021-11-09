@@ -104,5 +104,3 @@ jooq {
         }
     }
 }
-
-flywayMigrate.dependsOn classes
