@@ -2,6 +2,7 @@ rootProject.name = 'CleanMicroservice'
 include 'ConfigCore'
 
 include 'DeliveryKtor'
+include 'DeliveryGrpc'
 include 'DeliveryCli'
 include 'Core'
 include 'RepoPostgres'
