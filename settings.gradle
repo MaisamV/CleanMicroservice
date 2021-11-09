@@ -1,10 +1,12 @@
 rootProject.name = 'VirtualFund'
 include 'ConfigCli'
 
+include 'DeliveryKtor'
 include 'DeliveryCli'
 include 'Core'
 include 'RepoPostgres'
 
+include 'IDelivery'
 include 'ICore'
 include 'IRepo'
 include 'Model'
