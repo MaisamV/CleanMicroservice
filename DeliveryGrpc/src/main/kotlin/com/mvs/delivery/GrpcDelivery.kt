@@ -1,15 +1,13 @@
-package com.mvs
+package com.mvs.delivery
 
-import com.mvs.delivery.IDelivery
 import com.mvs.health.IHealthCommand
 import com.mvs.health.IPingCommand
 import io.grpc.Server
 import io.grpc.ServerBuilder
-import io.grpc.stub.StreamObserver
 import java.util.concurrent.TimeUnit
 
 
-class GrpcDelivery(private val health: IHealthCommand, private val ping: IPingCommand): IDelivery {
+class GrpcDelivery(val health: IHealthCommand, val ping: IPingCommand): IDelivery {
 
     private lateinit var server: Server
 
@@ -17,7 +15,7 @@ class GrpcDelivery(private val health: IHealthCommand, private val ping: IPingCo
         /* The port on which the server should run */
         val port = 50051
         server = ServerBuilder.forPort(port)
-            .addService(PingService())
+            .addAllServices(this)
             .build()
             .start()
         Runtime.getRuntime().addShutdownHook(object : Thread() {
@@ -41,13 +39,5 @@ class GrpcDelivery(private val health: IHealthCommand, private val ping: IPingCo
 
     private fun blockUntilShutdown() {
         server.awaitTermination()
-    }
-
-    internal class PingService : PingGrpc.PingImplBase() {
-        override fun ping(req: PingRequest, responseObserver: StreamObserver<PingResponse?>) {
-            val reply = PingResponse.newBuilder().build()
-            responseObserver.onNext(reply)
-            responseObserver.onCompleted()
-        }
     }
 }

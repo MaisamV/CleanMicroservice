@@ -30,4 +30,6 @@ service Ping {
 message PingRequest {}
 
 // The response message containing the greetings
-message PingResponse {}
+message PingResponse {
+  bool isSuccessful = 1;
+}
