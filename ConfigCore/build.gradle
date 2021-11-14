@@ -9,6 +9,7 @@ version '1.0-SNAPSHOT'
 
 dependencies {
     api project(":DeliveryKtor")
+    api project(":DeliveryGrpc")
     api project(":Core")
     api project(":RepoPostgres")
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'

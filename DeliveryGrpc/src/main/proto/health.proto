@@ -15,21 +15,22 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.mvs";
-option java_outer_classname = "PingProto";
+option java_outer_classname = "HealthProto";
 option objc_class_prefix = "HLW";
 
-package helloworld;
+package com.mvs.delivery;
 
 // The greeting service definition.
-service Ping {
+service Health {
   // Sends a greeting
-  rpc ping (PingRequest) returns (PingResponse) {}
+  rpc health(HealthRequest) returns (HealthResponse) {}
 }
 
 // The request message containing the user's name.
-message PingRequest {}
+message HealthRequest {}
 
 // The response message containing the greetings
-message PingResponse {
-  bool isSuccessful = 1;
+message HealthResponse {
+  bool canConnect = 1;
+  bool hasFunctionAccess = 2;
 }

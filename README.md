@@ -10,4 +10,4 @@ In order to run this project follow bellow instructions:
 3. ```git clone http://git.sabaolgoo.ir/m.vahidsafa/microservicetemplate.git```
 4. ```cd ./microservicetemplate```
 5. (If you didn't run flyway scripts already)```./gradlew flywayMigrate```
-6. ```./gradlew build ConfigCore:run```
+6. ```./gradlew generateProto build ConfigCore:run```
