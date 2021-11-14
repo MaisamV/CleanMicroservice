@@ -10,4 +10,4 @@ In order to run this project follow bellow instructions:
 3. ```git clone https://github.com/MaisamV/CleanMicroservice.git```
 4. ```cd ./CleanMicroservice```
 5. (If you didn't run flyway scripts already)```./gradlew flywayMigrate```
-6. ```./gradlew build ConfigCore:run```
+6. ```./gradlew generateProto build ConfigCore:run```
