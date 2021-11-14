@@ -10,12 +10,10 @@ import java.util.concurrent.TimeUnit
 
 
 class GrpcDelivery(private val health: IHealthCommand, private val ping: IPingCommand): IDelivery {
-    override fun start(args: Array<String>) {
-    }
 
     private lateinit var server: Server
 
-    private fun start() {
+    override fun start(args: Array<String>) {
         /* The port on which the server should run */
         val port = 50051
         server = ServerBuilder.forPort(port)
