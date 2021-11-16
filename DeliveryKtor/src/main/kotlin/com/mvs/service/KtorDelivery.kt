@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.mvs.delivery.IDelivery
 import com.mvs.health.IHealthCommand
 import com.mvs.health.IPingCommand
-import com.test.healthRoutes
-import com.test.pingRoute
+import com.mvs.service.health.healthRoutes
+import com.mvs.service.health.pingRoute
 import io.bkbn.kompendium.Notarized.notarizedException
 import io.bkbn.kompendium.models.meta.ResponseInfo
 import io.bkbn.kompendium.routes.openApi
