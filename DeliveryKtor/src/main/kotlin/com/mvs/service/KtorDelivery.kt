@@ -6,12 +6,19 @@ import com.mvs.health.IHealthCommand
 import com.mvs.health.IPingCommand
 import com.test.healthRoutes
 import com.test.pingRoute
+import io.bkbn.kompendium.Notarized.notarizedException
+import io.bkbn.kompendium.models.meta.ResponseInfo
+import io.bkbn.kompendium.routes.openApi
+import io.bkbn.kompendium.routes.redoc
+import io.bkbn.kompendium.swagger.swaggerUI
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.jackson.*
+import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.cio.*
+import io.ktor.webjars.*
 
 class KtorDelivery(private val health: IHealthCommand, private val ping: IPingCommand): IDelivery {
 
@@ -38,6 +45,18 @@ fun Application.addAllRoot() {
         allowNonSimpleContentTypes = true
         anyHost()
     }
+    install(Webjars)
+    install(StatusPages) {
+        notarizedException<Exception, ExceptionResponse>(
+            info = ResponseInfo(
+                HttpStatusCode.BadRequest,
+                "Bad Things Happened",
+                examples = mapOf("example" to ExceptionResponse("hey bad things happened sorry"))
+            )
+        ) {
+            call.respond(HttpStatusCode.BadRequest, ExceptionResponse("Why you do dis?"))
+        }
+    }
     install(ContentNegotiation) {
         jackson {
             setSerializationInclusion(JsonInclude.Include.NON_NULL)
@@ -48,6 +67,9 @@ fun Application.addAllRoot() {
 
 fun Application.registerRoutes() {
     routing {
+        openApi(oas)
+        redoc(oas)
+        swaggerUI()
         healthRoutes(healthCommand)
         pingRoute(pingCommand)
     }
