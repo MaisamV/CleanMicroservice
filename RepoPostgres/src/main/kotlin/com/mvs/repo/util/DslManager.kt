@@ -5,7 +5,7 @@ import org.jooq.SQLDialect
 import org.jooq.impl.DSL
 
 object DslManager {
-    fun <R> transaction(block: DSLContext.() -> R): R? {
+    fun <R> transaction(block: DSLContext.() -> R): R {
         return ConnectionManager.use {
             try {
                 val result = block(DSL.using(it, SQLDialect.POSTGRES))
