@@ -2,6 +2,7 @@ package com.test
 
 import com.mvs.health.IHealthCommand
 import com.mvs.service.util.GsonProvider
+import com.mvs.service.util.addRoute
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
@@ -10,12 +11,7 @@ import io.ktor.util.pipeline.*
 
 fun Route.healthRoutes(command: IHealthCommand) {
     route("/") {
-        route("/health") {
-            get {
-                handleHealth(command)
-            }
-        }
-        route("/health/") {
+        addRoute("/health") {
             get {
                 handleHealth(command)
             }
