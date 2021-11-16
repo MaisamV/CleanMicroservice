@@ -1,8 +1,10 @@
 package com.test
 
 import com.mvs.health.IHealthCommand
+import com.mvs.service.DocExample
 import com.mvs.service.util.GsonProvider
 import com.mvs.service.util.addRoute
+import io.bkbn.kompendium.Notarized.notarizedGet
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
@@ -12,7 +14,7 @@ import io.ktor.util.pipeline.*
 fun Route.healthRoutes(command: IHealthCommand) {
     route("/") {
         addRoute("/health") {
-            get {
+            notarizedGet(DocExample.getExamples) {
                 handleHealth(command)
             }
         }
