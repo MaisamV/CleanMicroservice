@@ -6,7 +6,7 @@ import io.bkbn.kompendium.models.oas.OpenApiSpecServer
 import java.net.URI
 
 val host = "192.168.240.165"
-val port = "8081"
+val port = "8089"
 val oas = Kompendium.openApiSpec.copy(
   info = OpenApiSpecInfo(
     title = "Microservice API",
