@@ -1,13 +1,13 @@
-package com.test
+package com.mvs.service.health
 
 import com.mvs.health.IPingCommand
 import com.mvs.service.DocExample
-import com.mvs.service.util.GsonProvider
+import com.mvs.service.dto.HealthErrorSheet
 import com.mvs.service.util.addRoute
+import com.mvs.service.util.respondError
+import com.mvs.service.util.respondOk
 import io.bkbn.kompendium.Notarized.notarizedGet
 import io.ktor.application.*
-import io.ktor.http.*
-import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.util.pipeline.*
 
@@ -23,15 +23,13 @@ fun Route.pingRoute(command: IPingCommand) {
 
 suspend fun PipelineContext<Unit, ApplicationCall>.handlePing(command: IPingCommand) {
     try {
-        call.respondText(
-            GsonProvider.gson.toJson(command.ping()),
-            ContentType.Application.Json,
-            HttpStatusCode.OK
+        call.respondOk(
+            command.ping()
         )
     } catch (e: Exception) {
         e.printStackTrace()
-        call.respond(
-            HttpStatusCode.InternalServerError
+        call.respondError(
+            HealthErrorSheet.HEALTH_EXCEPTION.toErrorData()
         )
     }
 }
