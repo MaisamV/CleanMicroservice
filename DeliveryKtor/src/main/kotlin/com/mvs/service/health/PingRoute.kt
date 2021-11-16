@@ -12,7 +12,7 @@ import io.ktor.routing.*
 import io.ktor.util.pipeline.*
 
 fun Route.pingRoute(command: IPingCommand) {
-    route("/") {
+    route("/api") {
         addRoute("/ping") {
             notarizedGet(DocExample.getExamples) {
                 handlePing(command)

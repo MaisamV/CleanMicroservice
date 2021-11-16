@@ -12,7 +12,7 @@ import io.ktor.routing.*
 import io.ktor.util.pipeline.*
 
 fun Route.healthRoutes(command: IHealthCommand) {
-    route("/") {
+    route("/api") {
         addRoute("/health") {
             notarizedGet(DocExample.getExamples) {
                 handleHealth(command)
