@@ -16,6 +16,7 @@ data class JustQuery(
   @KompendiumParam(ParamType.QUERY) val tomato: String
 )
 
+class NoParam
 data class ExampleNested(val nesty: String)
 
 data class ExampleGeneric<T>(val potato: T)

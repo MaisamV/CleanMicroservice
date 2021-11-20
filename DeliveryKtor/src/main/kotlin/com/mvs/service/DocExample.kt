@@ -17,18 +17,18 @@ object DocExample {
     canThrow = setOf(Exception::class)
   )
   @Suppress("MagicNumber")
-  val postExamples = MethodInfo.PostInfo<ExampleParams, ExampleRequest, ExampleResponse>(
-    summary = "Full Example",
-    description = "Throws just about all Kompendium has to offer into one endpoint",
+  val postExamples = MethodInfo.PostInfo<NoParam, ExampleRequest, ExampleResponse>(
+    summary = "Add fund",
+    description = "Add fund with basic data",
     requestInfo = RequestInfo(
-      description = "Necessary deetz",
+      description = "",
       examples = mapOf(
         "Send This" to ExampleRequest(ExampleNested("potato"), 13.37, listOf(12341))
       )
     ),
     responseInfo = ResponseInfo(
-      status = HttpStatusCode.Created,
-      description = "Congratz you hit da endpoint",
+      status = HttpStatusCode.OK,
+      description = "Fund has been added",
       examples = mapOf(
         "Expect This" to ExampleResponse(c = "Hi"),
         "Or This" to ExampleResponse(c = "Hey")
@@ -36,6 +36,43 @@ object DocExample {
     ),
     canThrow = setOf(Exception::class)
   )
+
+  @Suppress("MagicNumber")
+  val putExamples = MethodInfo.PutInfo<NoParam, ExampleRequest, ExampleResponse>(
+    summary = "Add fund",
+    description = "Add fund with basic data",
+    requestInfo = RequestInfo(
+      description = "",
+      examples = mapOf(
+        "Send This" to ExampleRequest(ExampleNested("potato"), 13.37, listOf(12341))
+      )
+    ),
+    responseInfo = ResponseInfo(
+      status = HttpStatusCode.OK,
+      description = "Fund has been added",
+      examples = mapOf(
+        "Expect This" to ExampleResponse(c = "Hi"),
+        "Or This" to ExampleResponse(c = "Hey")
+      )
+    ),
+    canThrow = setOf(Exception::class)
+  )
+
+  @Suppress("MagicNumber")
+  val deleteExamples = MethodInfo.DeleteInfo<NoParam, ExampleResponse>(
+    summary = "Add fund",
+    description = "Add fund with basic data",
+    responseInfo = ResponseInfo(
+      status = HttpStatusCode.OK,
+      description = "Fund has been added",
+      examples = mapOf(
+        "Expect This" to ExampleResponse(c = "Hi"),
+        "Or This" to ExampleResponse(c = "Hey")
+      )
+    ),
+    canThrow = setOf(Exception::class)
+  )
+
 
   val idGetInfo = MethodInfo.GetInfo<ExampleParams, ExampleGeneric<Int>>(
     summary = "Get Test",
