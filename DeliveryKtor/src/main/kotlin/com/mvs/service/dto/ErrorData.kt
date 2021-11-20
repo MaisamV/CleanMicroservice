@@ -1,8 +1,7 @@
 package com.mvs.service.dto
 
 class ErrorData(
-    type: ErrorType,
-    code: Long,
-    errorMessage: String,
-    localMessage: String
+    val code: Long,
+    val errorMessage: String,
+    val localMessage: String
 )
