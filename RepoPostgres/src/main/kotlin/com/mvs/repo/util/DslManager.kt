@@ -17,4 +17,15 @@ object DslManager {
             }
         }
     }
+
+    fun <R> autoCommit(block: DSLContext.() -> R): R {
+        return ConnectionManager.useAutoCommit {
+            try {
+                val result = block(DSL.using(it, SQLDialect.POSTGRES))
+                result
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
 }
