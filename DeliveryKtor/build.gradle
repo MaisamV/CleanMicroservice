@@ -20,6 +20,7 @@ dependencies {
     implementation "io.bkbn:kompendium-core:1.9.1"
     implementation("io.bkbn:kompendium-auth:1.9.1")
     implementation("io.bkbn:kompendium-swagger-ui:1.9.1")
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
 }
 

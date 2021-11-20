@@ -1,6 +1,7 @@
 package com.mvs.service
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.mvs.delivery.IDelivery
 import com.mvs.health.IHealthCommand
 import com.mvs.health.IPingCommand
@@ -59,6 +60,7 @@ fun Application.addAllRoot() {
     }
     install(ContentNegotiation) {
         jackson {
+            registerModule(JavaTimeModule())
             setSerializationInclusion(JsonInclude.Include.NON_NULL)
         }
     }
