@@ -7,7 +7,6 @@ import io.bkbn.kompendium.Notarized.notarizedPost
 import io.bkbn.kompendium.Notarized.notarizedPut
 import io.bkbn.kompendium.models.meta.MethodInfo
 import io.ktor.application.*
-import io.ktor.http.*
 import io.ktor.routing.*
 import io.ktor.util.pipeline.*
 
@@ -20,9 +19,7 @@ inline fun <reified TParam : Any, reified TResp : Any> Route.xGet(
             body.invoke(this, it)
         } catch (e: Exception) {
             e.printStackTrace()
-            call.respondError(HttpStatusCode.InternalServerError,
-                UnknownException().toErrorData()
-            )
+            call.respondError(UnknownException())
         }
     }
     return notarizedGet(info, newBody)
@@ -37,9 +34,7 @@ inline fun <reified TParam : Any, reified TReq : Any, reified TResp : Any> Route
             body.invoke(this, it)
         } catch (e: Exception) {
             e.printStackTrace()
-            call.respondError(HttpStatusCode.InternalServerError,
-                UnknownException().toErrorData()
-            )
+            call.respondError(UnknownException())
         }
     }
     return notarizedPost(info, newBody)
@@ -54,9 +49,7 @@ inline fun <reified TParam : Any, reified TReq : Any, reified TResp : Any> Route
             body.invoke(this, it)
         } catch (e: Exception) {
             e.printStackTrace()
-            call.respondError(HttpStatusCode.InternalServerError,
-                UnknownException().toErrorData()
-            )
+            call.respondError(UnknownException())
         }
     }
     return notarizedPut(info, newBody)
@@ -71,9 +64,7 @@ inline fun <reified TParam : Any, reified TResp : Any> Route.xDelete(
             body.invoke(this, it)
         } catch (e: Exception) {
             e.printStackTrace()
-            call.respondError(HttpStatusCode.InternalServerError,
-                UnknownException().toErrorData()
-            )
+            call.respondError(UnknownException())
         }
     }
     return notarizedDelete(info, newBody)
