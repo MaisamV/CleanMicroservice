@@ -2,6 +2,7 @@ package com.mvs.service.util
 
 import com.mvs.service.dto.ErrorData
 import com.mvs.service.dto.BaseResponse
+import com.mvs.service.exception.RemoteException
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
@@ -17,6 +18,13 @@ suspend inline fun ApplicationCall.respondError(error: ErrorData) {
     respond(
         HttpStatusCode.InternalServerError,
         BaseResponse(false, null, error)
+    )
+}
+
+suspend inline fun ApplicationCall.respondError(exception: RemoteException) {
+    respond(
+        exception.httpErrorCode,
+        BaseResponse(false, null, exception.toErrorData())
     )
 }
 
