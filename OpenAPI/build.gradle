@@ -1,0 +1,36 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm"
+    id 'maven-publish'
+}
+
+group 'com.github.papsign'
+version '0.2-beta.20-SNAPSHOT'
+
+def ktor_version= '1.6.1'
+def logback_version= '1.2.1'
+def slf4j_version= '1.7.30'
+def kotlin_version= '1.5.21'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.slf4j:slf4j-api:$slf4j_version"
+    implementation "io.ktor:ktor-server-core:$ktor_version"
+    implementation "io.ktor:ktor-server-host-common:$ktor_version"
+    implementation "io.ktor:ktor-metrics:$ktor_version"
+    implementation "io.ktor:ktor-server-sessions:$ktor_version"
+
+    implementation "io.ktor:ktor-jackson:$ktor_version" // needed for parameter parsing and multipart parsing
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8" // needed for multipart parsing
+    implementation 'org.webjars:swagger-ui:3.25.0'
+
+    implementation "org.reflections:reflections:0.9.11" // only used while initializing
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
+    testImplementation "io.ktor:ktor-server-netty:$ktor_version"
+    testImplementation "io.ktor:ktor-server-test-host:$ktor_version"
+    testImplementation "ch.qos.logback:logback-classic:$logback_version"
+    testImplementation "io.ktor:ktor-auth:$ktor_version"
+    testImplementation "io.ktor:ktor-auth-jwt:$ktor_version"
+
+
+}

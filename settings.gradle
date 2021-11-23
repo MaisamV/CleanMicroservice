@@ -13,4 +13,5 @@ include 'ICore'
 include 'IRepo'
 include 'Model'
 
+include 'OpenAPI'
 
