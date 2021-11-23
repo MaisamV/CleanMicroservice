@@ -1,19 +1,18 @@
 package com.mvs.service.health
 
 import com.mvs.health.IPingCommand
-import com.mvs.service.DocExample
-import com.mvs.service.util.addRoute
-import com.mvs.service.util.respondOk
-import com.mvs.service.util.xGet
-import io.ktor.application.*
-import io.ktor.routing.*
+import com.mvs.service.util.*
+import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
+import java.util.*
 
-fun Route.pingRoute(command: IPingCommand) {
-    route("/api") {
-        addRoute("/ping") {
-            xGet(DocExample.getExamples) {
-                call.respondOk(command.ping())
-            }
+fun NormalOpenAPIRoute.pingRoute(command: IPingCommand) {
+    addRoute("/api/ping") {
+        val code = 0x10000L
+        xGet<Unit, Boolean> {
+            respondOk(command.ping())
+        }.jsonParams<ServiceInfoModel> {
+            created = GregorianCalendar(2021, 11, 23).time
+            serviceCode = code
         }
     }
 }

@@ -7,19 +7,20 @@ import com.mvs.health.IHealthCommand
 import com.mvs.health.IPingCommand
 import com.mvs.service.health.healthRoutes
 import com.mvs.service.health.pingRoute
-import io.bkbn.kompendium.Notarized.notarizedException
-import io.bkbn.kompendium.models.meta.ResponseInfo
-import io.bkbn.kompendium.routes.openApi
-import io.bkbn.kompendium.routes.redoc
-import io.bkbn.kompendium.swagger.swaggerUI
+import com.mvs.service.health.swaggerRoute
+import com.mvs.service.util.ServiceInfoFactory
+import com.papsign.ktor.openapigen.OpenAPIGen
+import com.papsign.ktor.openapigen.modules.handlers.RouteHandler
+import com.papsign.ktor.openapigen.route.apiRouting
+import com.papsign.ktor.openapigen.schema.namer.DefaultSchemaNamer
+import com.papsign.ktor.openapigen.schema.namer.SchemaNamer
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.jackson.*
-import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.cio.*
-import io.ktor.webjars.*
+import kotlin.reflect.KType
 
 class KtorDelivery(private val health: IHealthCommand, private val ping: IPingCommand): IDelivery {
 
@@ -46,17 +47,30 @@ fun Application.addAllRoot() {
         allowNonSimpleContentTypes = true
         anyHost()
     }
-    install(Webjars)
-    install(StatusPages) {
-        notarizedException<Exception, ExceptionResponse>(
-            info = ResponseInfo(
-                HttpStatusCode.BadRequest,
-                "Bad Things Happened",
-                examples = mapOf("example" to ExceptionResponse("hey bad things happened sorry"))
-            )
-        ) {
-            call.respond(HttpStatusCode.BadRequest, ExceptionResponse("Why you do dis?"))
+    install(OpenAPIGen) {
+        // basic info
+        info {
+            version = "0.0.1"
+            title = "Test API"
+            description = "The Test API"
+            contact {
+                name = "Support"
+                email = "support@test.com"
+            }
         }
+        // describe the server, add as many as you want
+        server("http://localhost:8089/") {
+            description = "Test server"
+        }
+        //optional custom schema object namer
+        replaceModule(DefaultSchemaNamer, object :SchemaNamer {
+            val regex = Regex("[A-Za-z0-9_.]+")
+            override fun get(type: KType) : String {
+                return type.toString().replace(regex) {
+                    it.value.split(".").last()
+                }.replace(Regex(">|<|, "), "_")
+            }
+        })
     }
     install(ContentNegotiation) {
         jackson {
@@ -69,9 +83,10 @@ fun Application.addAllRoot() {
 
 fun Application.registerRoutes() {
     routing {
-        openApi(oas)
-        redoc(oas)
-        swaggerUI()
+        swaggerRoute()
+    }
+    apiRouting {
+        RouteHandler.factory = ServiceInfoFactory
         healthRoutes(healthCommand)
         pingRoute(pingCommand)
     }
