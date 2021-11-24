@@ -1,3 +1,5 @@
+package com.mvs
+
 import com.mvs.di.GrpcDeliveryProvider
 import com.mvs.di.KtorDeliveryProvider
 import com.mvs.di.SpringServerProvider

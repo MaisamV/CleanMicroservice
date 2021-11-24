@@ -16,4 +16,4 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
 }
 
-mainClassName = "MainKt"
+mainClassName = "com.mvs.MainKt"
