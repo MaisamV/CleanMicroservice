@@ -53,17 +53,17 @@ inline fun <reified MODEL: OperationModel> NormalOpenAPIRoute.jsonParams(body: M
     }
 }
 
-suspend inline fun <reified TResponse : Any> OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.respondOk(response: TResponse) {
+suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.respondOk(response: TResponse) {
     val statusCode = route.provider.ofType<StatusProvider>().lastOrNull()?.getStatusForType(getKType<BaseResponse<TResponse>>()) ?: BaseResponse::class.findAnnotation<Response>()?.statusCode?.let { HttpStatusCode.fromValue(it) } ?: HttpStatusCode.OK
     responder.respond(statusCode, BaseResponse(true, response, null) as Any, pipeline)
 }
 
-suspend inline fun <reified TResponse : Any> OpenAPIPipelineResponseContext<TResponse>.respondError(exception: RemoteException) {
+suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<TResponse>.respondError(exception: RemoteException) {
     val statusCode = route.provider.ofType<StatusProvider>().lastOrNull()?.getStatusForType(getKType<BaseResponse<TResponse>>()) ?: TResponse::class.findAnnotation<Response>()?.statusCode?.let { HttpStatusCode.fromValue(it) } ?: exception.httpErrorCode
     responder.respond(statusCode, BaseResponse(false, null, exception.toErrorData()) as Any, pipeline)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any> NormalOpenAPIRoute.xGet(
+inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.xGet(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     noinline body: suspend OpenAPIPipelineResponseContext
@@ -80,7 +80,7 @@ inline fun <reified TParams : Any, reified TResponse : Any> NormalOpenAPIRoute.x
     return get(*modules, example = newExample, body = newBody)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xPost(
+inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: Any> NormalOpenAPIRoute.xPost(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     exampleRequest: TRequest? = null,
@@ -98,7 +98,7 @@ inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: An
     return post(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xPut(
+inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: Any> NormalOpenAPIRoute.xPut(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     exampleRequest: TRequest? = null,
@@ -116,7 +116,7 @@ inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: An
     return put(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any> NormalOpenAPIRoute.xDelete(
+inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.xDelete(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     noinline body: suspend OpenAPIPipelineResponseContext
@@ -133,7 +133,7 @@ inline fun <reified TParams : Any, reified TResponse : Any> NormalOpenAPIRoute.x
     return delete(*modules, example = newExample, body = newBody)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xPatch(
+inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: Any> NormalOpenAPIRoute.xPatch(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     exampleRequest: TRequest? = null,
@@ -151,7 +151,7 @@ inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: An
     return patch(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xHead(
+inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: Any> NormalOpenAPIRoute.xHead(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     noinline body: suspend OpenAPIPipelineResponseContext
