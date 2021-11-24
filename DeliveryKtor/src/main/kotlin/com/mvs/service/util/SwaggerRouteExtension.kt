@@ -14,9 +14,7 @@ import com.papsign.ktor.openapigen.modules.registerModule
 import com.papsign.ktor.openapigen.openAPIGen
 import com.papsign.ktor.openapigen.route.OpenAPIRoute
 import com.papsign.ktor.openapigen.route.ThrowsInfo
-import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
-import com.papsign.ktor.openapigen.route.path.normal.get
-import com.papsign.ktor.openapigen.route.path.normal.post
+import com.papsign.ktor.openapigen.route.path.normal.*
 import com.papsign.ktor.openapigen.route.response.OpenAPIPipelineResponseContext
 import com.papsign.ktor.openapigen.route.route
 import io.ktor.http.*
@@ -98,4 +96,74 @@ inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: An
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
     return post(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
+}
+
+inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xPut(
+    vararg modules: RouteOpenAPIModule,
+    example: TResponse? = null,
+    exampleRequest: TRequest? = null,
+    noinline body: suspend OpenAPIPipelineResponseContext
+    <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
+): NormalOpenAPIRoute {
+    val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams, TRequest) -> Unit) = { params, req ->
+        try {
+            body.invoke(this, params, req)
+        } catch (e: Throwable) {
+            respondError(UnknownException())
+        }
+    }
+    val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
+    return put(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
+}
+
+inline fun <reified TParams : Any, reified TResponse : Any> NormalOpenAPIRoute.xDelete(
+    vararg modules: RouteOpenAPIModule,
+    example: TResponse? = null,
+    noinline body: suspend OpenAPIPipelineResponseContext
+    <BaseResponse<TResponse>>.(TParams) -> Unit
+): NormalOpenAPIRoute {
+    val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams) -> Unit) = { params ->
+        try {
+            body.invoke(this, params)
+        } catch (e: Throwable) {
+            respondError(UnknownException())
+        }
+    }
+    val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
+    return delete(*modules, example = newExample, body = newBody)
+}
+
+inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xPatch(
+    vararg modules: RouteOpenAPIModule,
+    example: TResponse? = null,
+    exampleRequest: TRequest? = null,
+    noinline body: suspend OpenAPIPipelineResponseContext
+    <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
+): NormalOpenAPIRoute {
+    val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams, TRequest) -> Unit) = { params, req ->
+        try {
+            body.invoke(this, params, req)
+        } catch (e: Throwable) {
+            respondError(UnknownException())
+        }
+    }
+    val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
+    return patch(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
+}
+
+inline fun <reified TParams : Any, reified TResponse : Any, reified TRequest: Any> NormalOpenAPIRoute.xHead(
+    vararg modules: RouteOpenAPIModule,
+    example: TResponse? = null,
+    noinline body: suspend OpenAPIPipelineResponseContext
+    <BaseResponse<TResponse>>.(TParams) -> Unit
+): NormalOpenAPIRoute {
+    val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams) -> Unit) = { params ->
+        try {
+            body.invoke(this, params)
+        } catch (e: Throwable) {
+            respondError(UnknownException())
+        }
+    }
+    val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
+    return head(*modules, example = newExample, body = newBody)
 }
