@@ -17,6 +17,7 @@ import com.papsign.ktor.openapigen.route.ThrowsInfo
 import com.papsign.ktor.openapigen.route.path.normal.*
 import com.papsign.ktor.openapigen.route.response.OpenAPIPipelineResponseContext
 import com.papsign.ktor.openapigen.route.route
+import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.routing.*
 import kotlin.reflect.full.findAnnotation
@@ -167,3 +168,5 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
     return head(*modules, example = newExample, body = newBody)
 }
+
+fun <T : Any?> OpenAPIPipelineResponseContext<T>.getRemoteIp() = pipeline.context.request.origin.remoteHost
