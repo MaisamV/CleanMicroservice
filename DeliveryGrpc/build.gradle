@@ -1,12 +1,29 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm'
-    id 'java'
-    id 'com.google.protobuf' version '0.8.17'
+buildscript {
+    repositories {
+        maven {
+            url "http://dl.google.com/dl/android/maven2"
+        }
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.17"
+    }
 }
+
+apply plugin: "java"
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "com.google.protobuf"
 
 def protobufVersion = '3.17.2'
 def protocVersion = protobufVersion
 def grpcVersion = '1.42.0'
+
+repositories {
+    google()
+    mavenCentral()
+    mavenLocal()
+}
 
 dependencies {
     api project(':IDelivery')
