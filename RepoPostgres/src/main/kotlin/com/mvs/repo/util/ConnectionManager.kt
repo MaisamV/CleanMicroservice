@@ -29,9 +29,9 @@ object ConnectionManager {
         val dataSource = BasicDataSource()
         dataSource.maxTotal = 90
         dataSource.maxIdle = 90
-        dataSource.url = System.getenv("fund_db_url") //example: "jdbc:postgresql://192.168.240.173:5432/postgres"
-        dataSource.username = System.getenv("fund_db_user_name")
-        dataSource.password = System.getenv("fund_db_user_pass")
+        dataSource.url = System.getenv("db_url") //example: "jdbc:postgresql://192.168.240.173:5432/postgres"
+        dataSource.username = System.getenv("db_user_name")
+        dataSource.password = System.getenv("db_user_pass")
         return dataSource
     }
 }

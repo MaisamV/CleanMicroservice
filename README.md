@@ -5,7 +5,7 @@ you can easily change any module of data related to data, logic, delivery just w
 In order to use another database just replace jdbc and data sources defined in build.gradle and ConnectionManager.kt 
 # Deploy
 In order to run this project follow bellow instructions:
-1. Define these environmental variables ```fund_db_url```, ```fund_db_superuser_name```, ```fund_db_superuser_pass```, ```fund_db_user_name```, ```fund_db_user_pass```
+1. Define these environmental variables ```db_url```, ```db_superuser_name```, ```db_superuser_pass```, ```db_user_name```, ```db_user_pass```
 2. RESTART your terminal or IDE in order to load updated environment variable correctly.
 3. ```git clone http://git.sabaolgoo.ir/m.vahidsafa/microservicetemplate.git```
 4. ```cd ./microservicetemplate```

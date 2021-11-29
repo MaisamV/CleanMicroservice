@@ -5,14 +5,14 @@ ARG APP_HOME=/fund
 
 FROM gradle:6-jdk11-alpine AS BUILDER
 ARG APP_HOME
-ARG db_url
-ARG db_user_name
-ARG db_user_pass
-ENV fund_db_url=$db_url
-ENV fund_db_user_name=$db_user_name
-ENV fund_db_user_pass=$db_user_pass
-ENV fund_db_superuser_name=$db_user_name
-ENV fund_db_superuser_pass=$db_user_pass
+ARG url
+ARG username
+ARG password
+ENV db_url=$url
+ENV db_user_name=$username
+ENV db_user_pass=$password
+ENV db_superuser_name=$username
+ENV db_superuser_pass=$password
 WORKDIR $APP_HOME
 COPY . .
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub

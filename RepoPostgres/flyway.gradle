@@ -1,7 +1,7 @@
 flyway {
-    url = "${System.getenv("fund_db_url")}"
-    user = System.getenv("fund_db_superuser_name")
+    url = "${System.getenv("db_url")}"
+    user = System.getenv("db_superuser_name")
     baselineOnMigrate = true
-    password = System.getenv("fund_db_superuser_pass")
+    password = System.getenv("db_superuser_pass")
     locations = ['filesystem:./db/migration']
 }
