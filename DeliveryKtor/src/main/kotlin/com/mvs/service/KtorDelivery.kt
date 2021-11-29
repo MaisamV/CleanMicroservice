@@ -20,7 +20,11 @@ import io.ktor.http.*
 import io.ktor.jackson.*
 import io.ktor.routing.*
 import io.ktor.server.cio.*
+import java.net.DatagramSocket
+import java.net.InetAddress
+import java.net.InetSocketAddress
 import kotlin.reflect.KType
+
 
 class KtorDelivery(private val health: IHealthCommand, private val ping: IPingCommand): IDelivery {
 
@@ -59,11 +63,12 @@ fun Application.addAllRoot() {
             }
         }
         // describe the server, add as many as you want
-        server("http://192.168.240.161:8089/") {
-            description = "Test server"
+        val ip = DatagramSocket().use { socket ->
+            socket.connect(InetSocketAddress("google.com", 80))
+            socket.localAddress.hostAddress
         }
-        server("http://localhost:8089/") {
-            description = "Local server"
+        server("http://$ip:8089/") {
+            description = "Test server"
         }
         //optional custom schema object namer
         replaceModule(DefaultSchemaNamer, object :SchemaNamer {
