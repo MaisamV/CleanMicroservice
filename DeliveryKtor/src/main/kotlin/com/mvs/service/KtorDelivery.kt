@@ -59,8 +59,11 @@ fun Application.addAllRoot() {
             }
         }
         // describe the server, add as many as you want
-        server("http://localhost:8089/") {
+        server("http://192.168.240.161:8089/") {
             description = "Test server"
+        }
+        server("http://localhost:8089/") {
+            description = "Local server"
         }
         //optional custom schema object namer
         replaceModule(DefaultSchemaNamer, object :SchemaNamer {
