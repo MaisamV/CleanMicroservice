@@ -1,4 +1,4 @@
-package ir.sabaolgoo.virtualfund.service.fund.exception
+package com.mvs.service.exception
 
 import com.mvs.service.exception.RemoteException
 import io.ktor.http.*
