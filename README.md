@@ -11,9 +11,9 @@ In order to run this project follow bellow instructions:
 4. ```cd ./microservicetemplate```
 5. (If you didn't run flyway scripts already)```./gradlew flywayMigrate```
 ### Gradle
-6. ```./gradlew clean generateProto build ConfigCore:run```
+6. ```./gradlew clean generateProto build -x test ConfigCore:run```
 ### Java
-6. ```./gradlew clean generateProto build fatJar```
+6. ```./gradlew clean generateProto build -x test fatJar```
 7. ```java -jar ./ConfigCore/build/libs/ConfigCore-1.0-all.jar```
 ### Docker
 6. ```docker build -t clean_microservice . --build-arg db_url --build-arg db_user_name --build-arg db_user_pass --network=host```
