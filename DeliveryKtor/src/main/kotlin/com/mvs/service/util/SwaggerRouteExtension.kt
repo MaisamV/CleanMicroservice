@@ -1,7 +1,6 @@
 package com.mvs.service.util
 
 import com.mvs.service.dto.BaseResponse
-import com.mvs.service.dto.ErrorData
 import com.mvs.service.exception.RemoteException
 import com.mvs.service.exception.UnknownException
 import com.papsign.ktor.openapigen.annotations.Response
@@ -10,10 +9,8 @@ import com.papsign.ktor.openapigen.model.operation.OperationModel
 import com.papsign.ktor.openapigen.modules.RouteOpenAPIModule
 import com.papsign.ktor.openapigen.modules.ofType
 import com.papsign.ktor.openapigen.modules.providers.StatusProvider
-import com.papsign.ktor.openapigen.modules.registerModule
 import com.papsign.ktor.openapigen.openAPIGen
 import com.papsign.ktor.openapigen.route.OpenAPIRoute
-import com.papsign.ktor.openapigen.route.ThrowsInfo
 import com.papsign.ktor.openapigen.route.path.normal.*
 import com.papsign.ktor.openapigen.route.response.OpenAPIPipelineResponseContext
 import com.papsign.ktor.openapigen.route.route
@@ -74,6 +71,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
         try {
             body.invoke(this, it)
         } catch (e: Throwable) {
+            e.printStackTrace()
             respondError(UnknownException())
         }
     }
@@ -92,6 +90,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
         try {
             body.invoke(this, params, req)
         } catch (e: Throwable) {
+            e.printStackTrace()
             respondError(UnknownException())
         }
     }
@@ -110,6 +109,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
         try {
             body.invoke(this, params, req)
         } catch (e: Throwable) {
+            e.printStackTrace()
             respondError(UnknownException())
         }
     }
@@ -127,6 +127,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
         try {
             body.invoke(this, params)
         } catch (e: Throwable) {
+            e.printStackTrace()
             respondError(UnknownException())
         }
     }
@@ -145,6 +146,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
         try {
             body.invoke(this, params, req)
         } catch (e: Throwable) {
+            e.printStackTrace()
             respondError(UnknownException())
         }
     }
@@ -162,6 +164,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
         try {
             body.invoke(this, params)
         } catch (e: Throwable) {
+            e.printStackTrace()
             respondError(UnknownException())
         }
     }
