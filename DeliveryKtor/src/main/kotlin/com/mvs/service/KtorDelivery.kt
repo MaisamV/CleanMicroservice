@@ -20,20 +20,19 @@ import io.ktor.http.*
 import io.ktor.jackson.*
 import io.ktor.routing.*
 import io.ktor.server.cio.*
+import ir.sabaolgoo.ICommandFactoryProvider
 import kotlin.reflect.KType
 
 
-class KtorDelivery(private val health: IHealthCommand, private val ping: IPingCommand): IDelivery {
+class KtorDelivery(private val commandFactoryProvider: ICommandFactoryProvider): IDelivery {
 
     override fun start(args: Array<String>) {
-        healthCommand = health
-        pingCommand = ping
+        commandFactory = commandFactoryProvider
         EngineMain.main(args)
     }
 }
 
-internal lateinit var healthCommand: IHealthCommand
-internal lateinit var pingCommand: IPingCommand
+lateinit var commandFactory: ICommandFactoryProvider
 
 fun Application.addAllRoot() {
     install(CORS) {
@@ -88,7 +87,7 @@ fun Application.registerRoutes() {
     }
     apiRouting {
         RouteHandler.factory = ServiceInfoFactory
-        healthRoutes(healthCommand)
-        pingRoute(pingCommand)
+        healthRoutes()
+        pingRoute()
     }
 }

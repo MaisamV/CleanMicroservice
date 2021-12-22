@@ -5,7 +5,6 @@ import com.mvs.service.KtorDelivery
 
 class KtorDeliveryProvider {
     fun provide(): IDelivery {
-        val commandProvider = CoreCommandProvider()
-        return KtorDelivery(commandProvider.provideHealth(), commandProvider.providePing())
+        return KtorDelivery(BaseCommandFactoryProvider())
     }
 }
