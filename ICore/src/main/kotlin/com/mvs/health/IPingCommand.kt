@@ -1,5 +1,7 @@
 package com.mvs.health
 
-interface IPingCommand {
+import ir.sabaolgoo.ICommand
+
+interface IPingCommand: ICommand {
     fun ping(): Boolean
 }
