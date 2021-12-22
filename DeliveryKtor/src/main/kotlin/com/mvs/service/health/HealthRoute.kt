@@ -14,7 +14,7 @@ fun NormalOpenAPIRoute.healthRoutes() {
     addRoute("/api/health") {
         val code = 0x10001L
         xPost<Unit, HealthInfo, Unit> { _, _ ->
-            val commandFactory: ICommandFactory<IHealthCommand> = commandFactory.getCommandFactory(IPingCommand::class) as ICommandFactory<IHealthCommand>
+            val commandFactory: ICommandFactory<IHealthCommand> = commandFactory.getCommandFactory(IHealthCommand::class) as ICommandFactory<IHealthCommand>
             val command = commandFactory.create(UserClaim())
             respondOk(command.checkHealth())
         }.jsonParams<ServiceInfoModel> {
@@ -23,7 +23,7 @@ fun NormalOpenAPIRoute.healthRoutes() {
         }
 
         xGet<Unit, HealthInfo> {
-            val commandFactory: ICommandFactory<IHealthCommand> = commandFactory.getCommandFactory(IPingCommand::class) as ICommandFactory<IHealthCommand>
+            val commandFactory: ICommandFactory<IHealthCommand> = commandFactory.getCommandFactory(IHealthCommand::class) as ICommandFactory<IHealthCommand>
             val command = commandFactory.create(UserClaim())
             respondOk(command.checkHealth())
         }.jsonParams<ServiceInfoModel> {
