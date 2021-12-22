@@ -1,5 +1,6 @@
 package com.mvs.service.util
 
+import com.mvs.service.commandFactory
 import com.mvs.service.dto.BaseResponse
 import com.mvs.service.exception.RemoteException
 import com.mvs.service.exception.UnknownException
@@ -17,7 +18,14 @@ import com.papsign.ktor.openapigen.route.route
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.routing.*
+import ir.sabaolgoo.ICommand
+import ir.sabaolgoo.ICommandFactory
 import kotlin.reflect.full.findAnnotation
+
+inline fun <reified TCommand: ICommand> NormalOpenAPIRoute.serviceRoute(crossinline body: NormalOpenAPIRoute.(ICommandFactory<TCommand>) -> Unit) {
+    val commandFactory: ICommandFactory<TCommand> = commandFactory.getCommandFactory(TCommand::class) as ICommandFactory<TCommand>
+    body.invoke(this, commandFactory)
+}
 
 inline fun <TRoute : OpenAPIRoute<TRoute>> TRoute.addRoute(path: String, crossinline fn: TRoute.() -> Unit) {
     if(path.endsWith('/')) {
