@@ -1,3 +1,3 @@
 package com.mvs.exception
 
-class PermissionDeniedException: RuntimeException()
+class PermissionDeniedException: BaseException(ExceptionCode.PERMISSION_DENIED.code, "Permission denied.", "دسترسی مجاز نیست.")
