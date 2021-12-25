@@ -6,6 +6,20 @@ ARG db_url
 ARG db_user_name
 ARG db_user_pass
 
+FROM gradle:6-jdk11-alpine AS MIGRATE
+ARG APP_HOME
+ARG db_url
+ARG db_user_name
+ARG db_user_pass
+ENV db_url=$db_url
+ENV db_user_name=$db_user_name
+ENV db_user_pass=$db_user_pass
+ENV db_superuser_name=$db_user_name
+ENV db_superuser_pass=$db_user_pass
+WORKDIR $APP_HOME
+COPY . .
+RUN gradle flywayMigrate --stacktrace
+
 FROM gradle:6-jdk11-alpine AS BUILDER
 ARG APP_HOME
 ARG db_url
