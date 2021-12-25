@@ -3,6 +3,7 @@ package com.mvs.service.util
 import com.mvs.service.dto.ErrorData
 import com.mvs.service.dto.BaseResponse
 import com.mvs.service.exception.RemoteException
+import com.mvs.service.exception.toErrorData
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
