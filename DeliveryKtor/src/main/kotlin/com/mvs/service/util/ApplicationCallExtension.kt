@@ -24,7 +24,7 @@ suspend inline fun ApplicationCall.respondError(error: ErrorData) {
 
 suspend inline fun ApplicationCall.respondError(exception: BaseException) {
     respond(
-        exception.httpErrorCode,
+        getHttpStatusCode(exception),
         BaseResponse(false, null, exception.toErrorData())
     )
 }

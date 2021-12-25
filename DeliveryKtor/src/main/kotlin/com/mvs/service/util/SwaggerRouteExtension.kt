@@ -1,8 +1,10 @@
 package com.mvs.service.util
 
+import com.mvs.exception.BadRequestException
 import com.mvs.service.commandFactory
 import com.mvs.service.dto.BaseResponse
 import com.mvs.exception.BaseException
+import com.mvs.exception.PermissionDeniedException
 import com.mvs.exception.UnknownException
 import com.mvs.service.exception.toErrorData
 import com.papsign.ktor.openapigen.annotations.Response
@@ -66,8 +68,16 @@ suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<Bas
 }
 
 suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<TResponse>.respondError(exception: BaseException) {
-    val statusCode = route.provider.ofType<StatusProvider>().lastOrNull()?.getStatusForType(getKType<BaseResponse<TResponse>>()) ?: TResponse::class.findAnnotation<Response>()?.statusCode?.let { HttpStatusCode.fromValue(it) } ?: exception.httpErrorCode
+    val statusCode = getHttpStatusCode(exception)
     responder.respond(statusCode, BaseResponse(false, null, exception.toErrorData()) as Any, pipeline)
+}
+
+inline fun <reified T :BaseException> getHttpStatusCode(e: T): HttpStatusCode {
+    return when(e::class) {
+        BadRequestException::class -> HttpStatusCode.BadRequest
+        PermissionDeniedException::class -> HttpStatusCode.Forbidden
+        else -> HttpStatusCode.InternalServerError
+    }
 }
 
 inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.xGet(
