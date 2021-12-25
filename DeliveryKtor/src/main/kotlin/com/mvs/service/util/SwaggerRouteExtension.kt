@@ -2,7 +2,7 @@ package com.mvs.service.util
 
 import com.mvs.service.commandFactory
 import com.mvs.service.dto.BaseResponse
-import com.mvs.service.exception.RemoteException
+import com.mvs.service.exception.BaseException
 import com.mvs.service.exception.UnknownException
 import com.mvs.service.exception.toErrorData
 import com.papsign.ktor.openapigen.annotations.Response
@@ -65,7 +65,7 @@ suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<Bas
     responder.respond(statusCode, BaseResponse(true, response, null) as Any, pipeline)
 }
 
-suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<TResponse>.respondError(exception: RemoteException) {
+suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<TResponse>.respondError(exception: BaseException) {
     val statusCode = route.provider.ofType<StatusProvider>().lastOrNull()?.getStatusForType(getKType<BaseResponse<TResponse>>()) ?: TResponse::class.findAnnotation<Response>()?.statusCode?.let { HttpStatusCode.fromValue(it) } ?: exception.httpErrorCode
     responder.respond(statusCode, BaseResponse(false, null, exception.toErrorData()) as Any, pipeline)
 }
