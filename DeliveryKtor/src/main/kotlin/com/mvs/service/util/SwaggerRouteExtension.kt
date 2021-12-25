@@ -2,8 +2,8 @@ package com.mvs.service.util
 
 import com.mvs.service.commandFactory
 import com.mvs.service.dto.BaseResponse
-import com.mvs.service.exception.BaseException
-import com.mvs.service.exception.UnknownException
+import com.mvs.exception.BaseException
+import com.mvs.exception.UnknownException
 import com.mvs.service.exception.toErrorData
 import com.papsign.ktor.openapigen.annotations.Response
 import com.papsign.ktor.openapigen.getKType

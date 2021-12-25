@@ -2,7 +2,7 @@ package com.mvs.service.util
 
 import com.mvs.service.dto.ErrorData
 import com.mvs.service.dto.BaseResponse
-import com.mvs.service.exception.BaseException
+import com.mvs.exception.BaseException
 import com.mvs.service.exception.toErrorData
 import io.ktor.application.*
 import io.ktor.http.*
