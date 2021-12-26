@@ -1,8 +1,8 @@
 package com.mvs.delivery.service
 
-import com.mvs.PingGrpc
-import com.mvs.PingRequest
-import com.mvs.PingResponse
+import com.mvs.delivery.PingGrpc
+import com.mvs.delivery.PingRequest
+import com.mvs.delivery.PingResponse
 import com.mvs.health.IPingCommand
 import io.grpc.stub.StreamObserver
 
