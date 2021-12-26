@@ -1,11 +1,9 @@
 package com.mvs.service.util
 
+import com.mvs.exception.*
 import com.mvs.exception.BadRequestException
 import com.mvs.service.commandFactory
 import com.mvs.service.dto.BaseResponse
-import com.mvs.exception.BaseException
-import com.mvs.exception.PermissionDeniedException
-import com.mvs.exception.UnknownException
 import com.mvs.service.exception.toErrorData
 import com.papsign.ktor.openapigen.annotations.Response
 import com.papsign.ktor.openapigen.getKType
@@ -87,11 +85,8 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
     <BaseResponse<TResponse>>.(TParams) -> Unit
 ): NormalOpenAPIRoute {
     val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams) -> Unit) = {
-        try {
+        handleError({ e -> respondError(e)}) {
             body.invoke(this, it)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            respondError(UnknownException())
         }
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
@@ -106,11 +101,8 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
     <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
 ): NormalOpenAPIRoute {
     val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams, TRequest) -> Unit) = { params, req ->
-        try {
+        handleKtorErrors {
             body.invoke(this, params, req)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            respondError(UnknownException())
         }
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
@@ -125,11 +117,8 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
     <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
 ): NormalOpenAPIRoute {
     val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams, TRequest) -> Unit) = { params, req ->
-        try {
+        handleKtorErrors {
             body.invoke(this, params, req)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            respondError(UnknownException())
         }
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
@@ -143,11 +132,8 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
     <BaseResponse<TResponse>>.(TParams) -> Unit
 ): NormalOpenAPIRoute {
     val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams) -> Unit) = { params ->
-        try {
+        handleKtorErrors {
             body.invoke(this, params)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            respondError(UnknownException())
         }
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
@@ -162,33 +148,31 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: A
     <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
 ): NormalOpenAPIRoute {
     val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams, TRequest) -> Unit) = { params, req ->
-        try {
+        handleKtorErrors {
             body.invoke(this, params, req)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            respondError(UnknownException())
         }
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
     return patch(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
-inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest: Any> NormalOpenAPIRoute.xHead(
+inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.xHead(
     vararg modules: RouteOpenAPIModule,
     example: TResponse? = null,
     noinline body: suspend OpenAPIPipelineResponseContext
     <BaseResponse<TResponse>>.(TParams) -> Unit
 ): NormalOpenAPIRoute {
     val newBody: (suspend OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.(TParams) -> Unit) = { params ->
-        try {
+        handleKtorErrors {
             body.invoke(this, params)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            respondError(UnknownException())
         }
     }
     val newExample : BaseResponse<TResponse>? = if(example!=null) BaseResponse(true, example, null) else null
     return head(*modules, example = newExample, body = newBody)
+}
+
+suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.handleKtorErrors(body: ()-> Unit) {
+    handleError({ e -> respondError(e)}, body)
 }
 
 fun <T : Any?> OpenAPIPipelineResponseContext<T>.getRemoteIp() = pipeline.context.request.origin.remoteHost
