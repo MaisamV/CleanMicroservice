@@ -11,3 +11,5 @@ inline fun handleError(error: (BaseException) -> Unit, body: ()-> Unit) {
         error.invoke(UnknownException())
     }
 }
+
+fun <T: BaseException> T.toErrorData(): ErrorData = ErrorData(code, errorMessage, localMessage)
