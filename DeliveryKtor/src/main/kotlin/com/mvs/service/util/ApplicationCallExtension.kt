@@ -1,6 +1,6 @@
 package com.mvs.service.util
 
-import com.mvs.service.dto.ErrorData
+import com.mvs.exception.ErrorData
 import com.mvs.service.dto.BaseResponse
 import com.mvs.exception.BaseException
 import com.mvs.service.exception.toErrorData

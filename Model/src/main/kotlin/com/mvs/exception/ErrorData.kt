@@ -1,4 +1,4 @@
-package com.mvs.service.dto
+package com.mvs.exception
 
 class ErrorData(
     val code: Long,

@@ -4,7 +4,6 @@ import com.mvs.exception.*
 import com.mvs.exception.BadRequestException
 import com.mvs.service.commandFactory
 import com.mvs.service.dto.BaseResponse
-import com.mvs.service.exception.toErrorData
 import com.papsign.ktor.openapigen.annotations.Response
 import com.papsign.ktor.openapigen.getKType
 import com.papsign.ktor.openapigen.model.operation.OperationModel
