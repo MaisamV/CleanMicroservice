@@ -13,6 +13,8 @@
 // limitations under the License.
 syntax = "proto3";
 
+import "base.proto";
+
 option java_multiple_files = true;
 option java_package = "com.mvs.delivery";
 option java_outer_classname = "HealthProto";
@@ -23,13 +25,18 @@ package com.mvs.delivery;
 // The greeting service definition.
 service Health {
   // Sends a greeting
-  rpc health(HealthRequest) returns (HealthResponse) {}
+  rpc health(HealthRequest) returns (HealthDto) {}
 }
 
 // The request message containing the user's name.
 message HealthRequest {}
 
-// The response message containing the greetings
+message HealthDto {
+  bool isSuccessful = 1;
+  optional ErrorData error = 2;
+  optional HealthResponse data = 3;
+}
+
 message HealthResponse {
   bool canConnect = 1;
   bool hasFunctionAccess = 2;
