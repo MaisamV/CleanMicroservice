@@ -35,3 +35,5 @@ message BoolDto {
   optional ErrorData error = 2;
   optional bool data = 3;
 }
+
+message EmptyRequest {}
