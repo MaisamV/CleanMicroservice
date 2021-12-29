@@ -25,6 +25,11 @@ message ErrorData {
   string localMessage = 3;
 }
 
+message BaseDto {
+  bool isSuccessful = 1;
+  optional ErrorData error = 2;
+}
+
 message BoolDto {
   bool isSuccessful = 1;
   optional ErrorData error = 2;
