@@ -24,3 +24,9 @@ message ErrorData {
   string errorMessage = 2;
   string localMessage = 3;
 }
+
+message BoolDto {
+  bool isSuccessful = 1;
+  optional ErrorData error = 2;
+  optional bool data = 3;
+}
