@@ -7,13 +7,10 @@ import io.grpc.stub.StreamObserver
 import ir.sabaolgoo.ICommandFactory
 import ir.sabaolgoo.ICommandFactoryProvider
 
-class PingService(private val commandFactoryProvider: ICommandFactoryProvider) : PingGrpc.PingImplBase() {
-
-    private val commandFactory: ICommandFactory<IPingCommand> = getFactory(commandFactoryProvider)
-
+class PingService : PingGrpc.PingImplBase() {
     override fun ping(request: EmptyRequest?, responseObserver: StreamObserver<BoolDto>?) {
         respond(responseObserver) {
-            commandFactory.create(UserClaim()).ping().toDto()
+            CommandFactoryHolder.pingFactory.create(UserClaim()).ping().toDto()
         }
     }
 }

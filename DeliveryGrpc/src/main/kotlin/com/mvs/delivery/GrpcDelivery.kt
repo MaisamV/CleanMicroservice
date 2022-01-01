@@ -11,6 +11,7 @@ class GrpcDelivery(val commandFactoryProvider: ICommandFactoryProvider): IDelive
     private lateinit var server: Server
 
     override fun start(args: Array<String>) {
+        CommandFactoryHolder.setCommandFactoryProvider(commandFactoryProvider)
         /* The port on which the server should run */
         val port = 50051
         server = ServerBuilder.forPort(port)

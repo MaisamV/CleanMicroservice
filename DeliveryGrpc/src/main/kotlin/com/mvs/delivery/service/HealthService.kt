@@ -7,13 +7,10 @@ import io.grpc.stub.StreamObserver
 import ir.sabaolgoo.ICommandFactory
 import ir.sabaolgoo.ICommandFactoryProvider
 
-class HealthService(commandFactoryProvider: ICommandFactoryProvider) : HealthGrpc.HealthImplBase() {
-
-    private val commandFactory: ICommandFactory<IHealthCommand> = getFactory(commandFactoryProvider)
-
+class HealthService : HealthGrpc.HealthImplBase() {
     override fun health(request: EmptyRequest?, responseObserver: StreamObserver<HealthDto>?) {
         respond(responseObserver) {
-            commandFactory.create(UserClaim()).checkHealth().toDto()
+            CommandFactoryHolder.healthFactory.create(UserClaim()).checkHealth().toDto()
         }
     }
 }
