@@ -1,6 +1,7 @@
 package com.mvs.delivery
 
 import com.google.protobuf.GeneratedMessageV3
+import com.mvs.auth.UserClaim
 import com.mvs.exception.BadRequestException
 import com.mvs.exception.BaseException
 import com.mvs.exception.PermissionDeniedException
@@ -9,14 +10,33 @@ import io.grpc.Status.Code
 import io.grpc.StatusRuntimeException
 import io.grpc.protobuf.ProtoUtils
 import io.grpc.stub.StreamObserver
+import ir.sabaolgoo.ICommand
+import ir.sabaolgoo.ICommandFactory
+import ir.sabaolgoo.ICommandFactoryProvider
 
-inline fun <reified TResponse: GeneratedMessageV3> respond(responseObserver: StreamObserver<TResponse>? , body: () -> TResponse) {
+inline fun <reified TResponse: GeneratedMessageV3> respond(
+    responseObserver: StreamObserver<TResponse>?,
+    body: () -> TResponse
+) {
     handleError({
         responseObserver?.onError(it.toGrpcException())
     }) {
         val reply = body.invoke()
         sendData(responseObserver, reply)
     }
+}
+
+inline fun <reified TCommand : ICommand> withFactory(
+    factory: ICommandFactoryProvider,
+    body: (ICommandFactory<TCommand>) -> Unit
+) {
+    body.invoke(factory.getCommandFactory(TCommand::class) as ICommandFactory<TCommand>)
+}
+
+inline fun <reified TCommand : ICommand> getFactory(
+    factory: ICommandFactoryProvider,
+): ICommandFactory<TCommand> {
+    return factory.getCommandFactory(TCommand::class) as ICommandFactory<TCommand>
 }
 
 inline fun <reified TResponse: GeneratedMessageV3> sendData(responseObserver: StreamObserver<TResponse>?, response: TResponse) {

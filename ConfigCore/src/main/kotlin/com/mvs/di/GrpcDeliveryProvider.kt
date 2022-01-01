@@ -5,7 +5,6 @@ import com.mvs.delivery.IDelivery
 
 class GrpcDeliveryProvider {
     fun provide(): IDelivery {
-        val commandProvider = CoreCommandProvider()
-        return GrpcDelivery(commandProvider.provideHealth(), commandProvider.providePing())
+        return GrpcDelivery(BaseCommandFactoryProvider())
     }
 }

@@ -1,13 +1,12 @@
 package com.mvs.delivery
 
-import com.mvs.health.IHealthCommand
-import com.mvs.health.IPingCommand
 import io.grpc.Server
 import io.grpc.ServerBuilder
+import ir.sabaolgoo.ICommandFactoryProvider
 import java.util.concurrent.TimeUnit
 
 
-class GrpcDelivery(val health: IHealthCommand, val ping: IPingCommand): IDelivery {
+class GrpcDelivery(val commandFactoryProvider: ICommandFactoryProvider): IDelivery {
 
     private lateinit var server: Server
 
