@@ -22,22 +22,11 @@ option objc_class_prefix = "HLW";
 
 package com.mvs.delivery;
 
-// The greeting service definition.
 service Health {
-  // Sends a greeting
-  rpc health(HealthRequest) returns (HealthDto) {}
+  rpc health(EmptyRequest) returns (HealthDto) {}
 }
-
-// The request message containing the user's name.
-message HealthRequest {}
 
 message HealthDto {
-  bool isSuccessful = 1;
-  optional ErrorData error = 2;
-  optional HealthResponse data = 3;
-}
-
-message HealthResponse {
   bool canConnect = 1;
   bool hasFunctionAccess = 2;
 }

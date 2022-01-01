@@ -19,21 +19,14 @@ option objc_class_prefix = "HLW";
 
 package com.mvs.delivery;
 
-message ErrorData {
+message ErrorMessage {
   int64 code = 1;
   string errorMessage = 2;
   string localMessage = 3;
 }
 
-message BaseDto {
-  bool isSuccessful = 1;
-  optional ErrorData error = 2;
-}
-
 message BoolDto {
-  bool isSuccessful = 1;
-  optional ErrorData error = 2;
-  optional bool data = 3;
+  bool data = 1;
 }
 
 message EmptyRequest {}
