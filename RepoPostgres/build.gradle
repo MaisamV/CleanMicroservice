@@ -1,9 +1,4 @@
 buildscript {
-    ext {
-        flywayVersion = '8.0.2'
-        jooqVersion = '3.15.4'
-        jdbcVersion = '42.3.1'
-    }
     repositories {
         mavenLocal()
         google()
@@ -11,14 +6,14 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.jooq:jooq-codegen:$jooqVersion"
+        classpath "org.jooq:jooq-codegen:$jooq_version"
     }
 }
 plugins {
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1"
     id 'org.jetbrains.kotlin.jvm'
     id 'java'
-    id "org.flywaydb.flyway" version "$flywayVersion"
+    id "org.flywaydb.flyway" version "$flyway_version"
     id 'nu.studer.jooq' version '6.0.1'
 }
 
@@ -35,15 +30,15 @@ repositories {
 
 dependencies {
     api project(':IRepo')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
 
-    implementation "org.flywaydb:flyway-core:$flywayVersion"
-    implementation "org.postgresql:postgresql:$jdbcVersion"
+    implementation "org.flywaydb:flyway-core:$flyway_version"
+    implementation "org.postgresql:postgresql:$jdbc_version"
 
-    jooqGenerator "org.postgresql:postgresql:$jdbcVersion"
-    implementation "org.jooq:jooq:$jooqVersion"
-    implementation "org.jooq:jooq-meta:$jooqVersion"
-    implementation "org.jooq:jooq-codegen:$jooqVersion"
+    jooqGenerator "org.postgresql:postgresql:$jdbc_version"
+    implementation "org.jooq:jooq:$jooq_version"
+    implementation "org.jooq:jooq-meta:$jooq_version"
+    implementation "org.jooq:jooq-codegen:$jooq_version"
 
     implementation 'org.apache.commons:commons-dbcp2:2.9.0'
 }

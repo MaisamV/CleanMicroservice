@@ -17,7 +17,7 @@ apply plugin: "com.google.protobuf"
 
 def protobufVersion = '3.17.2'
 def protocVersion = protobufVersion
-def grpcVersion = '1.42.0'
+def grpcVersion = '1.43.2'
 
 repositories {
     google()
@@ -28,7 +28,7 @@ repositories {
 dependencies {
     api project(':IDelivery')
     api project(":ICore")
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
 
     implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"

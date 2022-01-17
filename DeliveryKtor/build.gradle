@@ -6,19 +6,17 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-def ktor_version = '1.6.4'
-
 dependencies {
     api project(':IDelivery')
     api project(':ICore')
     api project(':OpenAPI')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-cio:$ktor_version"
     implementation "io.ktor:ktor-serialization:$ktor_version"
     implementation "io.ktor:ktor-jackson:$ktor_version"
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
 }
 

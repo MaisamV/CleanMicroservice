@@ -3,8 +3,6 @@ package com.mvs.service
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.mvs.delivery.IDelivery
-import com.mvs.health.IHealthCommand
-import com.mvs.health.IPingCommand
 import com.mvs.service.health.healthRoutes
 import com.mvs.service.health.pingRoute
 import com.mvs.service.health.swaggerRoute
@@ -43,7 +41,7 @@ fun Application.addAllRoot() {
         header(HttpHeaders.Authorization)
         header(HttpHeaders.ContentType)
         // header("any header") if you want to add any header
-        allowCredentials = true
+        allowCredentials = false
         allowNonSimpleContentTypes = true
         anyHost()
     }

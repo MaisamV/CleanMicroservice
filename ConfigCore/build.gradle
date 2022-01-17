@@ -13,7 +13,7 @@ dependencies {
     api project(":DeliverySpring")
     api project(":Core")
     api project(":RepoPostgres")
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
 mainClassName = "com.mvs.MainKt"
