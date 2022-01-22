@@ -2,7 +2,6 @@ package com.mvs
 
 import com.mvs.di.GrpcDeliveryProvider
 import com.mvs.di.KtorDeliveryProvider
-import com.mvs.di.SpringServerProvider
 import kotlin.concurrent.thread
 
 fun main(args: Array<String>) {
@@ -10,10 +9,6 @@ fun main(args: Array<String>) {
         val delivery = GrpcDeliveryProvider().provide()
         delivery.start(args)
     }
-    thread {
-        val delivery = KtorDeliveryProvider().provide()
-        delivery.start(args)
-    }
-    val delivery = SpringServerProvider.provide()
+    val delivery = KtorDeliveryProvider().provide()
     delivery.start(args)
 }
