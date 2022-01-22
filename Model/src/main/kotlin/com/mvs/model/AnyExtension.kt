@@ -24,3 +24,5 @@ inline fun printStacktrace(msg: String?) {
     println(msg)
     Thread.dumpStack()
 }
+
+inline fun env(key: String): String? = System.getenv(key)
