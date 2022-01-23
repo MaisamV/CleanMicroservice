@@ -4,7 +4,6 @@ import com.mvs.repo.health.ConnectionTester
 import com.mvs.repo.health.FunctionAccessTester
 import com.mvs.repo.util.ConnectionManager
 import com.mvs.repo.util.DslManager
-import com.repo.Routines
 
 class PostgresDbTester: ConnectionTester, FunctionAccessTester {
     override fun canConnect(): Boolean {
