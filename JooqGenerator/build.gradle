@@ -1,0 +1,81 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jooq:jooq-codegen:$jooq_version"
+    }
+}
+plugins {
+    id 'java'
+    id 'nu.studer.jooq' version '6.0.1'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    google()
+}
+
+dependencies {
+    jooqGenerator "org.postgresql:postgresql:$jdbc_version"
+    implementation "org.jooq:jooq-codegen:$jooq_version"
+}
+
+def jooqGenDir= 'build/generated/sources/jooq/main'
+
+jooq {
+    configurations {
+        main {  // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation = false  // default (can be omitted)
+
+            generationTool {
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = System.getenv("db_url")
+                    user = System.getenv("db_user_name")
+                    password = System.getenv("db_user_pass")
+                    properties {
+                        property {
+                            key = 'ssl'
+                            value = 'false'
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+                        forcedTypes {
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'JSONB?'
+                            }
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'INET'
+                            }
+                        }
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'com.mvs.repo'
+                        directory = jooqGenDir
+                    }
+                    strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                }
+            }
+        }
+    }
+}

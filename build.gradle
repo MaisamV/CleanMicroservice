@@ -18,6 +18,13 @@ apply plugin: "org.jetbrains.kotlin.jvm"
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+ext.jooqGenDir =  'build/generated/sources/jooq/main'
+
+task copyJooqFiles(type: Copy) {
+    from ("JooqGenerator/$jooqGenDir")
+    into ('RepoPostgres/src/main/java')
+}
+
 allprojects {
     repositories {
         mavenCentral()
