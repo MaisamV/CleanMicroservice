@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
     migrateDb(
         env("db_url")!!,
         env("db_superuser_name")!!,
-        env("db_superuser_name")!!
+        env("db_superuser_pass")!!
     )
     thread {
         val delivery = GrpcDeliveryProvider().provide()
