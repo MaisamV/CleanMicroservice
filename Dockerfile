@@ -15,6 +15,7 @@ ARG db_user_name
 ARG db_user_pass
 ARG db_superuser_name
 ARG db_superuser_pass
+ENV project_name=$project_name
 ENV db_url=$db_url
 ENV db_user_name=$db_user_name
 ENV db_user_pass=$db_user_pass
@@ -35,6 +36,7 @@ ARG db_user_name
 ARG db_user_pass
 ARG db_superuser_name
 ARG db_superuser_pass
+ENV project_name=$project_name
 ENV db_url=$db_url
 ENV db_user_name=$db_user_name
 ENV db_user_pass=$db_user_pass
