@@ -8,11 +8,11 @@ import ir.sabaolgoo.ICommandFactoryProvider
 import kotlin.reflect.KClass
 
 class BaseCommandFactoryProvider: ICommandFactoryProvider {
-    override fun <TCommand : ICommand> getCommandFactory(c: KClass<TCommand>): ICommandFactory<*> {
+    override fun <TCommand : ICommand> getCommandFactory(c: KClass<TCommand>): ICommandFactory<TCommand> {
         return when (c) {
             IPingCommand::class -> PingCommandFactory()
             IHealthCommand::class -> HealthCommandFactory()
             else -> throw IllegalArgumentException()
-        }
+        } as ICommandFactory<TCommand>
     }
 }
