@@ -8,7 +8,7 @@ In order to generate jooq files run following command on test database
 ```./gradlew flywayMigrate generateJooq copyJooqFiles```
 # Deploy
 In order to run this project follow bellow instructions:
-1. Define these environmental variables ```db_url```, ```db_superuser_name```, ```db_superuser_pass```, ```db_user_name```, ```db_user_pass```
+1. Define these environmental variables ```project_name```, ```db_url```, ```db_superuser_name```, ```db_superuser_pass```, ```db_user_name```, ```db_user_pass```
 2. RESTART your terminal or IDE in order to load updated environment variable correctly.
 3. ```git clone http://scg.otcsaba.ir/m.vahidsafa/microservicetemplate.git```
 4. ```cd ./microservicetemplate```
