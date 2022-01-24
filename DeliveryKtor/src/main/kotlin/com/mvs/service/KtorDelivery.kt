@@ -3,6 +3,7 @@ package com.mvs.service
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.mvs.delivery.IDelivery
+import com.mvs.model.env
 import com.mvs.service.health.healthRoutes
 import com.mvs.service.health.pingRoute
 import com.mvs.service.health.swaggerRoute
@@ -31,6 +32,12 @@ class KtorDelivery(private val commandFactoryProvider: ICommandFactoryProvider):
 }
 
 lateinit var commandFactory: ICommandFactoryProvider
+val projectName = env("project_name").also {
+    if(it.isNullOrEmpty()){
+        println("Project name can not be null.")
+    }
+    it!!
+}
 
 fun Application.addAllRoot() {
     install(CORS) {
