@@ -1,12 +1,11 @@
 buildscript {
-    repositories {
-        jcenter {
-            url "http://jcenter.bintray.com/"
-        }
-        google()
-        mavenCentral()
-        mavenLocal()
+    ext.repos =  {
+        it.mavenLocal()
+        it.google()
+        it.mavenCentral()
+        it.gradlePluginPortal()
     }
+    repositories repos
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -14,9 +13,6 @@ buildscript {
 
 apply plugin: "java"
 apply plugin: "org.jetbrains.kotlin.jvm"
-
-group 'org.example'
-version '1.0-SNAPSHOT'
 
 ext.jooqGenDir =  'build/generated/sources/jooq/main'
 
@@ -26,11 +22,7 @@ task copyJooqFiles(type: Copy) {
 }
 
 allprojects {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        google()
-    }
+    repositories repos
 
     tasks.withType(JavaCompile).all {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -44,11 +36,7 @@ allprojects {
     }
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    google()
-}
+repositories repos
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"

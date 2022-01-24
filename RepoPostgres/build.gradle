@@ -1,7 +1,5 @@
 buildscript {
-    repositories {
-        gradlePluginPortal()
-    }
+    repositories repos
 
     dependencies {
         classpath "org.flywaydb.flyway:org.flywaydb.flyway.gradle.plugin:$flyway_version"
@@ -12,15 +10,6 @@ apply plugin: 'java'
 apply plugin: "org.jetbrains.kotlin.jvm"
 apply plugin: 'org.flywaydb.flyway'
 apply from: 'flyway.gradle'
-
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-    google()
-}
 
 dependencies {
     api project(':IRepo')

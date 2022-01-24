@@ -1,10 +1,5 @@
 buildscript {
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
+    repositories repos
 
     dependencies {
         classpath "org.jooq:jooq-codegen:$jooq_version"
@@ -13,12 +8,6 @@ buildscript {
 }
 apply plugin: 'java'
 apply plugin: 'nu.studer.jooq'
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-    google()
-}
 
 dependencies {
     jooqGenerator "org.postgresql:postgresql:$jdbc_version"
