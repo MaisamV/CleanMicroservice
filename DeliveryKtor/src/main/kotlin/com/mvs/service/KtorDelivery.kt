@@ -82,10 +82,10 @@ fun Application.addAllRoot() {
 fun Application.registerRoutes() {
     routing {
         swaggerRoute()
+        healthRoutes()
+        pingRoute()
     }
     apiRouting {
         RouteHandler.factory = ServiceInfoFactory
-        healthRoutes()
-        pingRoute()
     }
 }

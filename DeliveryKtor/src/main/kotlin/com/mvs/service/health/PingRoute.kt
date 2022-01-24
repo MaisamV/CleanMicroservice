@@ -1,21 +1,17 @@
 package com.mvs.service.health
 
+import com.mvs.auth.UserClaim
 import com.mvs.health.IPingCommand
-import com.mvs.service.dto.BaseDto
-import com.mvs.service.util.*
-import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
-import java.util.*
+import com.mvs.service.commandFactory
+import com.mvs.service.util.addRoute
+import com.mvs.service.util.respondOk
+import io.ktor.application.*
+import io.ktor.routing.*
 
-fun NormalOpenAPIRoute.pingRoute() {
-    serviceRoute<IPingCommand> { factory ->
-        addRoute("/api/ping") {
-            val code = 0x10000L
-            xAuthGet<IPingCommand, BaseDto, Boolean>(factory) { command, userClaim, params ->
-                respondOk(command.ping())
-            }.jsonParams<ServiceInfoModel> {
-                created = GregorianCalendar(2021, 11, 23).time
-                serviceCode = code
-            }
+fun Route.pingRoute() {
+    addRoute("/api/ping") {
+        get {
+            call.respondOk(commandFactory.getCommandFactory(IPingCommand::class).create(UserClaim()).ping())
         }
     }
 }

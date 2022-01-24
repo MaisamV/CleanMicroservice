@@ -1,29 +1,17 @@
 package com.mvs.service.health
 
+import com.mvs.auth.UserClaim
 import com.mvs.health.IHealthCommand
-import com.mvs.model.health.HealthInfo
-import com.mvs.service.dto.BaseDto
-import com.mvs.service.util.*
-import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
-import java.util.*
+import com.mvs.service.commandFactory
+import com.mvs.service.util.addRoute
+import com.mvs.service.util.respondOk
+import io.ktor.application.*
+import io.ktor.routing.*
 
-fun NormalOpenAPIRoute.healthRoutes() {
-    serviceRoute<IHealthCommand> { factory ->
-        addRoute("/api/health") {
-            val code = 0x10001L
-            xAuthPost<IHealthCommand, BaseDto, HealthInfo, Unit>(factory) { command, claim, params, req ->
-                respondOk(command.checkHealth())
-            }.jsonParams<ServiceInfoModel> {
-                created = GregorianCalendar(2021, 11, 23).time
-                serviceCode = code
-            }
-
-            xAuthGet<IHealthCommand, BaseDto, HealthInfo>(factory) { command, claim, params ->
-                respondOk(command.checkHealth())
-            }.jsonParams<ServiceInfoModel> {
-                created = GregorianCalendar(2021, 11, 23).time
-                serviceCode = code
-            }
+fun Route.healthRoutes() {
+    addRoute("/api/health") {
+        get {
+            call.respondOk(commandFactory.getCommandFactory(IHealthCommand::class).create(UserClaim()).checkHealth())
         }
     }
 }
