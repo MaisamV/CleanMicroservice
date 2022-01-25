@@ -32,7 +32,7 @@ class KtorDelivery(private val commandFactoryProvider: ICommandFactoryProvider):
 }
 
 lateinit var commandFactory: ICommandFactoryProvider
-val projectName = env("project_name").also {
+val projectName = env("project_name").let {
     if(it.isNullOrEmpty()){
         println("Project name can not be null.")
     }
@@ -58,12 +58,12 @@ fun Application.addAllRoot() {
     install(OpenAPIGen) {
         // basic info
         info {
-            version = "0.0.1"
-            title = "Test API"
-            description = "The Test API"
+            version = "0.9.0"
+            title = "${projectName.uppercase()} API"
+            description = "This document provides information about almost all APIs provided by ${projectName} server app."
             contact {
-                name = "Support"
-                email = "support@test.com"
+                name = "Developer"
+                email = "maisam.vahidsafa@gmail.com"
             }
         }
         // describe the server, add as many as you want
