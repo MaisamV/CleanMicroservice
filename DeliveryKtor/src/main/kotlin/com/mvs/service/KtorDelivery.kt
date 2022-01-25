@@ -38,6 +38,9 @@ val projectName = env("project_name").also {
     }
     it!!
 }
+inline fun endpointPrefix(version: String) = "/api/$projectName/$version"
+val maxVersion = 1
+val versions = mutableMapOf<Int, String>().apply { for(i in 1..maxVersion){this[i] = "V$i"} }
 
 fun Application.addAllRoot() {
     install(CORS) {
