@@ -21,7 +21,7 @@ ENV db_user_name=$db_user_name
 ENV db_user_pass=$db_user_pass
 ENV db_superuser_name=$db_superuser_name
 ENV db_superuser_pass=$db_superuser_pass
-WORKDIR $project_name
+WORKDIR /$project_name
 COPY . .
 COPY ./sgerrand.rsa.pub /etc/apk/keys/sgerrand.rsa.pub
 RUN apk add glibc-2.34-r0.apk
@@ -42,8 +42,8 @@ ENV db_user_name=$db_user_name
 ENV db_user_pass=$db_user_pass
 ENV db_superuser_name=$db_superuser_name
 ENV db_superuser_pass=$db_superuser_pass
-WORKDIR $project_name
-COPY --from=BUILDER $project_name/ConfigCore/build/libs/ConfigCore-1.0-all.jar ./ConfigCore-1.0-all.jar
+WORKDIR /$project_name
+COPY --from=BUILDER /$project_name/ConfigCore/build/libs/ConfigCore-1.0-all.jar ./ConfigCore-1.0-all.jar
 EXPOSE 8089
 EXPOSE 50051
 ENTRYPOINT ["java","-jar","./ConfigCore-1.0-all.jar"]
