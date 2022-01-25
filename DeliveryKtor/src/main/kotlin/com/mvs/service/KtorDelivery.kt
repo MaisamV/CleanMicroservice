@@ -60,7 +60,7 @@ fun Application.addAllRoot() {
         info {
             version = "0.9.0"
             title = "${projectName.uppercase()} API"
-            description = "This document provides information about almost all APIs provided by ${projectName} server app."
+            description = "This document provides information about almost all APIs provided by ${projectName} microservice."
             contact {
                 name = "Developer"
                 email = "maisam.vahidsafa@gmail.com"
