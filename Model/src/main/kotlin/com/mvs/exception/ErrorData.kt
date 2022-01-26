@@ -1,7 +1,8 @@
 package com.mvs.exception
 
 class ErrorData(
-    val code: Long,
-    val errorMessage: String,
-    val localMessage: String
+    val title: String,
+    val details: List<String>,
+    val cause: BaseErrorCause? = null,
+    val code: Long? = null
 )

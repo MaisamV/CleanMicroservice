@@ -65,12 +65,12 @@ suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<Bas
         route.provider.ofType<StatusProvider>().lastOrNull()?.getStatusForType(getKType<BaseResponse<TResponse>>())
             ?: BaseResponse::class.findAnnotation<Response>()?.statusCode?.let { HttpStatusCode.fromValue(it) }
             ?: HttpStatusCode.OK
-    responder.respond(statusCode, BaseResponse(true, response, null) as Any, pipeline)
+    responder.respond(statusCode, BaseResponse(response) as Any, pipeline)
 }
 
 suspend inline fun <reified TResponse : Any?> OpenAPIPipelineResponseContext<TResponse>.respondError(exception: BaseException) {
     val statusCode = getHttpStatusCode(exception)
-    responder.respond(statusCode, BaseResponse(false, null, exception.toErrorData()) as Any, pipeline)
+    responder.respond(statusCode, BaseResponse(null, listOf(exception.toErrorData())) as Any, pipeline)
 }
 
 inline fun <reified T : BaseException> getHttpStatusCode(e: T): HttpStatusCode {
@@ -88,7 +88,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
     <BaseResponse<TResponse>>.(TParams) -> Unit
 ): NormalOpenAPIRoute {
     val newBody = getNewParamsBody(body)
-    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(true, example, null) else null
+    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(example) else null
     return get(*modules, example = newExample, body = newBody)
 }
 
@@ -100,7 +100,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest : 
     <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
 ): NormalOpenAPIRoute {
     val newBody = getNewParamsWithRequestBody(body)
-    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(true, example, null) else null
+    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(example) else null
     return post(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
@@ -112,7 +112,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest : 
     <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
 ): NormalOpenAPIRoute {
     val newBody = getNewParamsWithRequestBody(body)
-    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(true, example, null) else null
+    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(example) else null
     return put(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
@@ -123,7 +123,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
     <BaseResponse<TResponse>>.(TParams) -> Unit
 ): NormalOpenAPIRoute {
     val newBody = getNewParamsBody(body)
-    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(true, example, null) else null
+    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(example) else null
     return delete(*modules, example = newExample, body = newBody)
 }
 
@@ -135,7 +135,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?, reified TRequest : 
     <BaseResponse<TResponse>>.(TParams, TRequest) -> Unit
 ): NormalOpenAPIRoute {
     val newBody = getNewParamsWithRequestBody(body)
-    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(true, example, null) else null
+    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(example) else null
     return patch(*modules, exampleResponse = newExample, exampleRequest = exampleRequest, body = newBody)
 }
 
@@ -146,7 +146,7 @@ inline fun <reified TParams : Any, reified TResponse : Any?> NormalOpenAPIRoute.
     <BaseResponse<TResponse>>.(TParams) -> Unit
 ): NormalOpenAPIRoute {
     val newBody = getNewParamsBody(body)
-    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(true, example, null) else null
+    val newExample: BaseResponse<TResponse>? = if (example != null) BaseResponse(example) else null
     return head(*modules, example = newExample, body = newBody)
 }
 

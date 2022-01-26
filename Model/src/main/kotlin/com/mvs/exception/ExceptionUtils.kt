@@ -12,4 +12,4 @@ inline fun handleError(error: (BaseException) -> Unit, body: ()-> Unit) {
     }
 }
 
-fun <T: BaseException> T.toErrorData(): ErrorData = ErrorData(code, errorMessage, localMessage)
+fun <T: BaseException> T.toErrorData(): ErrorData = ErrorData(localMessage, listOf(localMessage), null, code)

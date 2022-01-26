@@ -11,27 +11,24 @@ import io.ktor.response.*
 suspend inline fun <reified T : Any> ApplicationCall.respondOk(data: T?) {
     respond(
         HttpStatusCode.OK,
-        BaseResponse(true, data, null)
+        BaseResponse(data)
     )
 }
 
 suspend inline fun ApplicationCall.respondError(error: ErrorData) {
     respond(
         HttpStatusCode.InternalServerError,
-        BaseResponse(false, null, error)
-    )
+        BaseResponse(null, listOf(error)))
 }
 
 suspend inline fun ApplicationCall.respondError(exception: BaseException) {
     respond(
         getHttpStatusCode(exception),
-        BaseResponse(false, null, exception.toErrorData())
-    )
+        BaseResponse(null, listOf(exception.toErrorData())))
 }
 
 suspend inline fun ApplicationCall.respondError(status: HttpStatusCode, error: ErrorData) {
     respond(
         status,
-        BaseResponse(false, null, error)
-    )
+        BaseResponse(null, listOf(error)))
 }

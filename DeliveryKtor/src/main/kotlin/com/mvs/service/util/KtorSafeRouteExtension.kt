@@ -65,7 +65,7 @@ suspend inline fun PipelineContext<Unit, ApplicationCall>.handleKtorErrors(body:
 
 suspend inline fun PipelineContext<Unit, ApplicationCall>.respondError(exception: BaseException) {
     val statusCode = getHttpStatusCode(exception)
-    call.respond(statusCode, BaseResponse(false, null, exception.toErrorData()))
+    call.respond(statusCode, BaseResponse(null, listOf(exception.toErrorData())))
 }
 
 inline fun getSafeBody(
