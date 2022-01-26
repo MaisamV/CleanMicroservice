@@ -18,5 +18,5 @@ In order to run this project follow bellow instructions:
 5. ```./gradlew clean generateProto build -x test fatJar```
 6. ```java -jar ./ConfigCore/build/libs/ConfigCore-1.0-all.jar```
 ### Docker
-5. ```docker build -t clean_microservice . --build-arg db_url --build-arg db_user_name --build-arg db_user_pass --build-arg db_superuser_name --build-arg db_superuser_pass --network=host```
+5. ```docker build -t clean_microservice . --build-arg project_name --build-arg db_url --build-arg db_user_name --build-arg db_user_pass --build-arg db_superuser_name --build-arg db_superuser_pass --network=host```
 6. ```docker run -p 8089:8089 -p 50051:50051 clean_microservice```
