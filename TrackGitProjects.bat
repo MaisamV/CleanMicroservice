@@ -3,16 +3,15 @@ git remote rename origin github
 git branch -m base
 
 git remote add saba-template http://scg.otcsaba.ir/m.vahidsafa/microservicetemplate.git
-git checkout --track saba-template/master
-git checkout master
-git branch -m saba-base
-git branch saba-base --set-upstream-to saba-template/master
+git fetch saba-template
+git switch -c saba-base saba-template/master
 
-git branch develop
-git checkout develop
+git branch master
+git checkout master
 @echo off
 set /p repository="Enter Project name in gitlab: "
 git remote add origin http://scg.otcsaba.ir/m.vahidsafa/%repository%
-git push -u origin develop
+git checkout --track origin/master
+git push -u origin master
 cd ..
 ren "%repoDir%" "%repository%"
