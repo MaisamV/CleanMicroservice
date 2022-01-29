@@ -10,8 +10,8 @@ In order to generate jooq files run following command on test database
 In order to run this project follow bellow instructions:
 1. Define these environmental variables ```project_name```, ```db_url```, ```db_superuser_name```, ```db_superuser_pass```, ```db_user_name```, ```db_user_pass```
 2. RESTART your terminal or IDE in order to load updated environment variable correctly.
-3. ```git clone http://scg.otcsaba.ir/m.vahidsafa/microservicetemplate.git```
-4. ```cd ./microservicetemplate```
+3. Clone the project
+4. Go to project directory
 ### Gradle
 5. ```./gradlew clean generateProto build -x test ConfigCore:run```
 ### Java
