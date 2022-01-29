@@ -1,8 +1,10 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm'
-    id 'java'
-    id 'application'
+buildscript {
+    repositories repos
 }
+
+apply plugin: "java"
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "application"
 
 group 'org.example'
 version '1.0'
