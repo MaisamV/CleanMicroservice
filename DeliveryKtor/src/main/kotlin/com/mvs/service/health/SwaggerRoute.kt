@@ -12,11 +12,11 @@ fun Route.swaggerRoute() {
         get("/swagger/apiversions") {
             call.respond(VersionsDto(versions.map { "v$it" }))
         }
-        get("/openapi.json") {
+        get("/v1/swagger.json") { //add urls in index.html
             call.respond(application.openAPIGen.api.serialize())
         }
         get("/") {
-            call.respondRedirect("/swagger-ui/index.html?url=/openapi.json", true)
+            call.respondRedirect("/swagger-ui/index.html", true)
         }
     }
 }

@@ -22,8 +22,12 @@ class SwaggerUi(private val basePath: String, private val version: String) {
             in notFound -> return
             null -> return
             else -> {
-                val resource = this::class.java.getResource("/META-INF/resources/webjars/swagger-ui/$version/$filename")
-                if (resource == null) {
+                val filePath = if(filename.lowercase() != "index.html")
+                    "/META-INF/resources/webjars/swagger-ui/$version/$filename"
+                else
+                    "/META-INF/resources/webjars/swagger-ui/$filename" // custom index.html
+                val resource = this::class.java.getResource(filePath)
+                    if (resource == null) {
                     notFound.add(filename)
                     return
                 }
