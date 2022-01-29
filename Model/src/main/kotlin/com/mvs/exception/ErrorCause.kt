@@ -1,6 +1,6 @@
 package com.mvs.exception
 
-open class BaseErrorCause (
+open class ErrorCause (
     val type: CauseType,
     val field: String?,
     val row: Long?
