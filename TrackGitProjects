@@ -17,9 +17,10 @@ git fetch saba-template
 git switch -c saba-base saba-template/master
 
 read -p "Enter Project name in gitlab: " repository
+cd ..
+ren "%repoDir%" "%repository%"
+cd "./%repository%"
+
 git remote add origin http://scg.otcsaba.ir/m.vahidsafa/%repository%
 git fetch origin
 git switch -c master origin/master
-
-cd ..
-mv "$repoDir" "$repository"
