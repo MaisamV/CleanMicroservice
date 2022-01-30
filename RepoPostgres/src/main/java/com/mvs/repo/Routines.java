@@ -4,25 +4,16 @@
 package com.mvs.repo;
 
 
-import com.mvs.repo.routines.AddRole;
-import com.mvs.repo.routines.AddRoleToUser;
 import com.mvs.repo.routines.CheckFunction;
 import com.mvs.repo.routines.DailyPartitioner;
 import com.mvs.repo.routines.MinPartitioner;
 import com.mvs.repo.routines.MonthlyPartitioner;
-import com.mvs.repo.routines.RevokeUserRole;
-import com.mvs.repo.routines.UserHasRole;
 import com.mvs.repo.routines.YearlyPartitioner;
-import com.mvs.repo.tables.GetRoleList;
-import com.mvs.repo.tables.GetUserRoles;
-import com.mvs.repo.tables.records.GetRoleListRecord;
-import com.mvs.repo.tables.records.GetUserRolesRecord;
 
 import java.time.LocalDateTime;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.Result;
 
 
 /**
@@ -30,94 +21,6 @@ import org.jooq.Result;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
-
-    /**
-     * Call <code>public.add_role</code>
-     */
-    public static Integer addRole(
-          Configuration configuration
-        , String pName
-        , Long pAccessLevel
-    ) {
-        AddRole f = new AddRole();
-        f.setPName(pName);
-        f.setPAccessLevel(pAccessLevel);
-
-        f.execute(configuration);
-        return f.getReturnValue();
-    }
-
-    /**
-     * Get <code>public.add_role</code> as a field.
-     */
-    public static Field<Integer> addRole(
-          String pName
-        , Long pAccessLevel
-    ) {
-        AddRole f = new AddRole();
-        f.setPName(pName);
-        f.setPAccessLevel(pAccessLevel);
-
-        return f.asField();
-    }
-
-    /**
-     * Get <code>public.add_role</code> as a field.
-     */
-    public static Field<Integer> addRole(
-          Field<String> pName
-        , Field<Long> pAccessLevel
-    ) {
-        AddRole f = new AddRole();
-        f.setPName(pName);
-        f.setPAccessLevel(pAccessLevel);
-
-        return f.asField();
-    }
-
-    /**
-     * Call <code>public.add_role_to_user</code>
-     */
-    public static Integer addRoleToUser(
-          Configuration configuration
-        , Long pUserId
-        , Long pRoleId
-    ) {
-        AddRoleToUser f = new AddRoleToUser();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        f.execute(configuration);
-        return f.getReturnValue();
-    }
-
-    /**
-     * Get <code>public.add_role_to_user</code> as a field.
-     */
-    public static Field<Integer> addRoleToUser(
-          Long pUserId
-        , Long pRoleId
-    ) {
-        AddRoleToUser f = new AddRoleToUser();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        return f.asField();
-    }
-
-    /**
-     * Get <code>public.add_role_to_user</code> as a field.
-     */
-    public static Field<Integer> addRoleToUser(
-          Field<Long> pUserId
-        , Field<Long> pRoleId
-    ) {
-        AddRoleToUser f = new AddRoleToUser();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        return f.asField();
-    }
 
     /**
      * Call <code>public.check_function</code>
@@ -198,94 +101,6 @@ public class Routines {
     }
 
     /**
-     * Call <code>public.revoke_user_role</code>
-     */
-    public static Integer revokeUserRole(
-          Configuration configuration
-        , Long pUserId
-        , Long pRoleId
-    ) {
-        RevokeUserRole f = new RevokeUserRole();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        f.execute(configuration);
-        return f.getReturnValue();
-    }
-
-    /**
-     * Get <code>public.revoke_user_role</code> as a field.
-     */
-    public static Field<Integer> revokeUserRole(
-          Long pUserId
-        , Long pRoleId
-    ) {
-        RevokeUserRole f = new RevokeUserRole();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        return f.asField();
-    }
-
-    /**
-     * Get <code>public.revoke_user_role</code> as a field.
-     */
-    public static Field<Integer> revokeUserRole(
-          Field<Long> pUserId
-        , Field<Long> pRoleId
-    ) {
-        RevokeUserRole f = new RevokeUserRole();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        return f.asField();
-    }
-
-    /**
-     * Call <code>public.user_has_role</code>
-     */
-    public static Boolean userHasRole(
-          Configuration configuration
-        , Long pUserId
-        , Long pRoleId
-    ) {
-        UserHasRole f = new UserHasRole();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        f.execute(configuration);
-        return f.getReturnValue();
-    }
-
-    /**
-     * Get <code>public.user_has_role</code> as a field.
-     */
-    public static Field<Boolean> userHasRole(
-          Long pUserId
-        , Long pRoleId
-    ) {
-        UserHasRole f = new UserHasRole();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        return f.asField();
-    }
-
-    /**
-     * Get <code>public.user_has_role</code> as a field.
-     */
-    public static Field<Boolean> userHasRole(
-          Field<Long> pUserId
-        , Field<Long> pRoleId
-    ) {
-        UserHasRole f = new UserHasRole();
-        f.setPUserId(pUserId);
-        f.setPRoleId(pRoleId);
-
-        return f.asField();
-    }
-
-    /**
      * Call <code>public.yearly_partitioner</code>
      */
     public static void yearlyPartitioner(
@@ -302,57 +117,5 @@ public class Routines {
         p.setD2(d2);
 
         p.execute(configuration);
-    }
-
-    /**
-     * Call <code>public.get_role_list</code>.
-     */
-    public static Result<GetRoleListRecord> getRoleList(
-          Configuration configuration
-    ) {
-        return configuration.dsl().selectFrom(com.mvs.repo.tables.GetRoleList.GET_ROLE_LIST.call(
-        )).fetch();
-    }
-
-    /**
-     * Get <code>public.get_role_list</code> as a table.
-     */
-    public static GetRoleList getRoleList() {
-        return com.mvs.repo.tables.GetRoleList.GET_ROLE_LIST.call(
-        );
-    }
-
-    /**
-     * Call <code>public.get_user_roles</code>.
-     */
-    public static Result<GetUserRolesRecord> getUserRoles(
-          Configuration configuration
-        , Long pUserId
-    ) {
-        return configuration.dsl().selectFrom(com.mvs.repo.tables.GetUserRoles.GET_USER_ROLES.call(
-              pUserId
-        )).fetch();
-    }
-
-    /**
-     * Get <code>public.get_user_roles</code> as a table.
-     */
-    public static GetUserRoles getUserRoles(
-          Long pUserId
-    ) {
-        return com.mvs.repo.tables.GetUserRoles.GET_USER_ROLES.call(
-            pUserId
-        );
-    }
-
-    /**
-     * Get <code>public.get_user_roles</code> as a table.
-     */
-    public static GetUserRoles getUserRoles(
-          Field<Long> pUserId
-    ) {
-        return com.mvs.repo.tables.GetUserRoles.GET_USER_ROLES.call(
-            pUserId
-        );
     }
 }
