@@ -39,7 +39,7 @@ inline fun <TRoute : OpenAPIRoute<TRoute>> TRoute.addRoute(path: String, crossin
 inline fun <reified TResponse : Any> OpenAPIPipelineResponseContext<BaseResponse<TResponse>>.jsonParams(body: OperationModel.() -> Unit) {
     val model = route.ktorRoute.application.openAPIGen.api.paths.get(route.ktorRoute.parent.toString())?.get
     model?.also {
-        it.tags = listOf(route.ktorRoute.toString().split("/")[3])
+        it.tags = listOf(route.ktorRoute.toString().split("/")[4])
         body.invoke(it)
     }
 }
@@ -59,7 +59,7 @@ inline fun <reified MODEL : OperationModel> NormalOpenAPIRoute.jsonParams(body: 
             else -> null
         }
         if (model != null) {
-            model.tags = listOf(ktorRoute.toString().split("/")[3])
+            model.tags = listOf(ktorRoute.toString().split("/")[4])
             body.invoke(model as MODEL)
         }
     }
