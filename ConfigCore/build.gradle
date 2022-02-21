@@ -20,6 +20,12 @@ dependencies {
 
 mainClassName = "com.mvs.MainKt"
 
+task jarWithDeps(dependsOn: 'jar', type: Copy) {
+    def conf = configurations.runtimeClasspath
+    from conf.allDependencies.collect { conf.files(it) }
+    into "${project.buildDir}/libs"
+}
+
 jar {
     manifest {
         attributes(
