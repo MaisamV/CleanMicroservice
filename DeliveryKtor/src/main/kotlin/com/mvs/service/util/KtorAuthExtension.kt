@@ -1,6 +1,6 @@
 package com.mvs.service.util
 
-import com.mvs.auth.RoleType
+import com.mvs.auth.Role
 import com.mvs.auth.UserClaim
 import io.ktor.application.*
 import io.ktor.routing.*
@@ -74,13 +74,13 @@ inline fun <TCommand: ICommand> getAuthBody(
 }
 
 inline fun PipelineContext<Unit, ApplicationCall>.withClaim(body: (UserClaim) -> Unit) {
-    val userRoles = arrayListOf<RoleType>()
+    val userRoles = arrayListOf<Role>()
     val headers = call.request.headers
     val currentUserId = headers["USER-ID"]?.toLong()
     val targetUserId = headers["TARGET-USER-ID"]?.toLong() ?: currentUserId
     headers["USER-ROLE"]?.let {
-        userRoles.add(RoleType.valueOf(it))
+        userRoles.add(Role(name = it))
     }
-    userRoles.add(RoleType.ANONYMOUS)
+    userRoles.add(Role.ANONYMOUS)
     body.invoke(UserClaim(currentUserId, targetUserId, userRoles))
 }

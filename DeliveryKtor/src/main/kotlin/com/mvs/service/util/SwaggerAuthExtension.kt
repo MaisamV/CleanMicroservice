@@ -1,6 +1,6 @@
 package com.mvs.service.util
 
-import com.mvs.auth.RoleType
+import com.mvs.auth.Role
 import com.mvs.auth.UserClaim
 import com.mvs.service.dto.BaseDto
 import com.mvs.service.dto.BaseResponse
@@ -103,12 +103,12 @@ inline fun <reified TCommand : ICommand, reified TParams : BaseDto, reified TRes
 }
 
 inline fun withClaim(baseParams: BaseDto, body: (UserClaim) -> Unit) {
-    val userRoles = arrayListOf<RoleType>()
+    val userRoles = arrayListOf<Role>()
     val currentUserId = baseParams.`USER-ID`
     val targetUserId = baseParams.`TARGET-USER-ID` ?: currentUserId
     baseParams.`USER-ROLE`?.let {
-        userRoles.add(it)
+        userRoles.add(Role(name = it))
     }
-    userRoles.add(RoleType.ANONYMOUS)
+    userRoles.add(Role.ANONYMOUS)
     body.invoke(UserClaim(currentUserId, targetUserId, userRoles))
 }
