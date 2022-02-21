@@ -104,9 +104,9 @@ inline fun <reified TCommand : ICommand, reified TParams : BaseDto, reified TRes
 
 inline fun withClaim(baseParams: BaseDto, body: (UserClaim) -> Unit) {
     val userRoles = arrayListOf<Role>()
-    val currentUserId = baseParams.`USER-ID`
+    val currentUserId = baseParams.sub
     val targetUserId = baseParams.`TARGET-USER-ID` ?: currentUserId
-    baseParams.`USER-ROLE`?.let {
+    baseParams.role?.let {
         userRoles.add(Role(name = it))
     }
     userRoles.add(Role.ANONYMOUS)

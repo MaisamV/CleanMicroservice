@@ -76,9 +76,9 @@ inline fun <TCommand: ICommand> getAuthBody(
 inline fun PipelineContext<Unit, ApplicationCall>.withClaim(body: (UserClaim) -> Unit) {
     val userRoles = arrayListOf<Role>()
     val headers = call.request.headers
-    val currentUserId = headers["USER-ID"]?.toLong()
+    val currentUserId = headers["SUB"]?.toLong()
     val targetUserId = headers["TARGET-USER-ID"]?.toLong() ?: currentUserId
-    headers["USER-ROLE"]?.let {
+    headers["ROLE"]?.let {
         userRoles.add(Role(name = it))
     }
     userRoles.add(Role.ANONYMOUS)
